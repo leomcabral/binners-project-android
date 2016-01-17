@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Binners App</string>
+    <string name="login">Log In</string>
+    <string name="txtLoginWith">Log in with</string>
+    <string name="createAccount">Create an Account</string>
+    <string name="forgotPassword">Forgot Password?</string>
+</resources>
