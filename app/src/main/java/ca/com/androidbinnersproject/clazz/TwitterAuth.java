@@ -1,0 +1,22 @@
+package ca.com.androidbinnersproject.clazz;
+
+/**
+ * Created by jonathan_campos on 18/01/2016.
+ */
+public class TwitterAuth extends Authentication {
+
+    @Override
+    public void login() {
+
+    }
+
+    @Override
+    public void logout() {
+
+    }
+
+    @Override
+    public void revoke() {
+
+    }
+}
