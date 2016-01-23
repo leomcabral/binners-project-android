@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
  * Created by jonathan_campos on 17/01/2016.
  */
 public class StartApp extends Activity {
-    private boolean logged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +21,26 @@ public class StartApp extends Activity {
             intent.setClass(this, MainActivity.class);
         } else {
             intent.setClass(this, Login.class);
+            startActivityForResult(intent, Login.FROM_LOGIN);
+            return;
         }
 
         startActivity(intent);
     }
 
     public boolean isLogged() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        return preferences.getBoolean(Login.USER_AUTHENTICATED, false);
+        SharedPreferences preferences = getSharedPreferences(Login.USER_AUTHENTICATED, 0);
+        return preferences.getBoolean(Login.IS_AUTHENTICATED, false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Login.FROM_LOGIN) {
+            if(resultCode == RESULT_OK) {
+                Intent intent = new Intent();
+                intent.setClass(this, MainActivity.class);
+                startActivity(intent);
+            }
+        }
     }
 }
