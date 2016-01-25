@@ -1,4 +1,6 @@
+
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 23
@@ -12,12 +14,19 @@ android {
         versionName "1.0"
         multiDexEnabled true
     }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
@@ -34,6 +43,10 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
 
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+
+    compile('com.twitter.sdk.android:twitter:1.12.0@aar') {
+        transitive = true;
+    }
 
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
