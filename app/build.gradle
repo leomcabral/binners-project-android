@@ -24,6 +24,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ext.enableCrashlytics = false
+        }
+
+        debug {
+            ext.enableCrashlytics = false
         }
     }
 
@@ -34,7 +40,6 @@ android {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
