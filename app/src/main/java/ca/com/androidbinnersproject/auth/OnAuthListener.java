@@ -1,4 +1,4 @@
-package ca.com.androidbinnersproject.clazz;
+package ca.com.androidbinnersproject.auth;
 
 /**
  * Created by jonathan_campos on 18/01/2016.
@@ -6,7 +6,7 @@ package ca.com.androidbinnersproject.clazz;
 public interface OnAuthListener {
 
     /**
-     * Called when the login was succefully made and allow to save
+     * Called when the login was successfully made and allow to save
      * some users information.
      * @param profile Information about the user eg. Name
      */

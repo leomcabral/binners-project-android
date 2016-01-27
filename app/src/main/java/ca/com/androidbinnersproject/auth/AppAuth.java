@@ -1,4 +1,4 @@
-package ca.com.androidbinnersproject.clazz;
+package ca.com.androidbinnersproject.auth;
 
 /**
  * Created by jonathan_campos on 18/01/2016.

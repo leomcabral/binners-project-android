@@ -1,4 +1,5 @@
-package ca.com.androidbinnersproject.clazz;
+
+package ca.com.androidbinnersproject.auth;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,12 +21,8 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-/**
- * Created by jonathan_campos on 18/01/2016.
- */
 public class FacebookAuth extends Authentication implements FacebookCallback<LoginResult>{
 
-    private final Activity mActivity;
     private final CallbackManager facebookCallbackManager;
     private final LoginManager facebookLoginManager;
     private String LOG_TAG = getClass().getName();
@@ -33,17 +30,18 @@ public class FacebookAuth extends Authentication implements FacebookCallback<Log
     public FacebookAuth(Activity activity, OnAuthListener listener) {
         FacebookSdk.sdkInitialize(activity.getApplicationContext());
 
-        mActivity = activity;
+        this.activity = activity;
         facebookCallbackManager = CallbackManager.Factory.create();
         facebookLoginManager = LoginManager.getInstance();
         facebookLoginManager.registerCallback(facebookCallbackManager, this);
 
-        setOnAuthListener(listener);
+		if(listener != null)
+        	setOnAuthListener(listener);
     }
 
     @Override
     public void login() {
-        facebookLoginManager.logInWithReadPermissions(mActivity,
+        facebookLoginManager.logInWithReadPermissions(activity,
                 Arrays.asList("public_profile", "email"));
     }
 

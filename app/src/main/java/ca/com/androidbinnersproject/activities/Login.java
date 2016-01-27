@@ -1,7 +1,7 @@
+
 package ca.com.androidbinnersproject.activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,27 +10,25 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import ca.com.androidbinnersproject.R;
-import ca.com.androidbinnersproject.clazz.Authentication;
-import ca.com.androidbinnersproject.clazz.FacebookAuth;
-import ca.com.androidbinnersproject.clazz.GoogleAuth;
-import ca.com.androidbinnersproject.clazz.OnAuthListener;
-import ca.com.androidbinnersproject.clazz.Profile;
+import ca.com.androidbinnersproject.auth.Authentication;
+import ca.com.androidbinnersproject.auth.FacebookAuth;
+import ca.com.androidbinnersproject.auth.GoogleAuth;
+import ca.com.androidbinnersproject.auth.OnAuthListener;
+import ca.com.androidbinnersproject.auth.Profile;
+import ca.com.androidbinnersproject.auth.TwitterAuth;
 
-/**
- * Created by jonathan_campos on 17/01/2016.
- */
-public class Login extends Activity implements OnAuthListener {
+public class Login extends Activity implements OnAuthListener
+{
     public static String IS_AUTHENTICATED = "IS_AUTHENTICATED";
     public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final int FROM_LOGIN = 25678;
 
-    private Authentication mAuthentication;
-
-    FacebookAuth mFacebookAuth;
+	private Authentication authentication;
 
     private Button btnGoogle;
     private Button btnFacebook;
+    private Button btnTwitter;
 
     //private ProgressDialog mProgressDialog;
 
@@ -41,6 +39,7 @@ public class Login extends Activity implements OnAuthListener {
 
         btnGoogle   = (Button) findViewById(R.id.btnGoogle);
         btnFacebook = (Button) findViewById(R.id.btnFacebook);
+		btnTwitter = (Button) findViewById(R.id.btnTwitter);
 
         initButtonListeners();
     }
@@ -51,20 +50,28 @@ public class Login extends Activity implements OnAuthListener {
             public void onClick(View v) {
 //                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Login!");
 
-                mAuthentication = new GoogleAuth(Login.this, Login.this);
-
-                mAuthentication.login();
+				authentication = new GoogleAuth(Login.this, Login.this);
+				authentication.login();
             }
         });
 
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFacebookAuth = new FacebookAuth(Login.this, Login.this);
-
-                mFacebookAuth.login();
+				authentication = new FacebookAuth(Login.this, Login.this);
+				authentication.login();
             }
         });
+
+        btnTwitter.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				authentication = new TwitterAuth(Login.this, Login.this);
+				authentication.login();
+			}
+		});
     }
 
     @Override
@@ -106,20 +113,23 @@ public class Login extends Activity implements OnAuthListener {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if(requestCode == GoogleAuth.GOOGLE_SIGN_IN) {
-            if(resultCode == RESULT_OK) {
-                mAuthentication.login();
-            } else {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(requestCode == GoogleAuth.GOOGLE_SIGN_IN)
+        {
+            if(resultCode == RESULT_OK)
+				authentication.login();
+            else
                 onLoginCancel();
-            }
+		}
+		else if(authentication instanceof FacebookAuth)
+		{
+            if(resultCode == RESULT_OK)
+				((FacebookAuth) authentication).getFacebookCallbackManager().onActivityResult(requestCode, resultCode, data);
         }
-
-        if(mFacebookAuth != null) {
-            if(resultCode == RESULT_OK) {
-                mFacebookAuth.getFacebookCallbackManager().onActivityResult(requestCode, resultCode, data);
-            }
-        }
+        else if(authentication instanceof TwitterAuth)
+		{
+			((TwitterAuth) authentication).authClient.onActivityResult(requestCode, resultCode, data);
+		}
     }
 }

@@ -1,9 +1,10 @@
-package ca.com.androidbinnersproject.clazz;
+package ca.com.androidbinnersproject.auth;
 
 import android.app.Activity;
 import android.content.IntentSender;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -24,7 +25,6 @@ import java.io.IOException;
  */
 public class GoogleAuth extends Authentication implements ConnectionCallbacks, OnConnectionFailedListener {
 
-    private Activity mActivity;
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
 
@@ -36,16 +36,17 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
     final Profile mProfile = new Profile();
 
     public GoogleAuth(Activity activity, OnAuthListener listener) {
-        mActivity = activity;
+        this.activity = activity;
 
-        mGoogleApiClient = new GoogleApiClient.Builder(mActivity)
+        mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_PROFILE)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
 
-        setOnAuthListener(listener);
+		if(listener != null)
+        	setOnAuthListener(listener);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
             Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient).setResultCallback(
                     new ResultCallback<Status>() {
                         @Override
-                        public void onResult(Status status) {
+                        public void onResult(@NonNull Status status) {
                             onAuthListener.onRevoke();
                         }
                     }
@@ -93,20 +94,22 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         if(connectionResult.hasResolution()) {
             try {
-                mActivity.startIntentSenderForResult(connectionResult.getResolution().getIntentSender(),
-                        GOOGLE_SIGN_IN, null, 0, 0, 0);
-            }catch (IntentSender.SendIntentException e) {
+            	if(connectionResult.getResolution() != null)
+					activity.startIntentSenderForResult(connectionResult.getResolution().getIntentSender(),
+							GOOGLE_SIGN_IN, null, 0, 0, 0);
+            } catch (IntentSender.SendIntentException e) {
                 Log.e(LOG_TAG, e.getMessage());
                 mGoogleApiClient.connect();
             }
-        } else{
+        } else {
             String message = "Google Plus Error: "+ connectionResult.getErrorCode();
             Log.e(LOG_TAG, message);
 
-            onAuthListener.onLoginError(message);
+			if(onAuthListener != null)
+            	onAuthListener.onLoginError(message);
         }
     }
 
@@ -118,18 +121,14 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
 
             try {
                 token = GoogleAuthUtil.getToken(
-                        mActivity,
+                        activity,
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         "oauth2:" + SCOPES);
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error after trying to get access token" + token);
-            } catch (GoogleAuthException e) {
+            } catch (IOException | GoogleAuthException e) {
                 Log.e(LOG_TAG, "Error after trying to get access token" + token);
             }
 
-
             return token;
-
         }
 
         @Override
@@ -138,6 +137,5 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
             mProfile.setAccessToken(token);
             onAuthListener.onLoginSuccess(mProfile);
         }
-
     }
 }
