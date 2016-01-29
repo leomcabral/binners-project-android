@@ -1,3 +1,4 @@
+
 package ca.com.androidbinnersproject.auth;
 
 import android.app.Activity;
@@ -20,9 +21,8 @@ import com.google.android.gms.plus.model.people.Person;
 
 import java.io.IOException;
 
-/**
- * Created by jonathan_campos on 18/01/2016.
- */
+import ca.com.androidbinnersproject.auth.keys.KeyManager;
+
 public class GoogleAuth extends Authentication implements ConnectionCallbacks, OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
@@ -35,7 +35,7 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
 
     final Profile mProfile = new Profile();
 
-    public GoogleAuth(Activity activity, OnAuthListener listener) {
+    public GoogleAuth(Activity activity, OnAuthListener listener, KeyManager keyManager) {
         this.activity = activity;
 
         mGoogleApiClient = new GoogleApiClient.Builder(activity)

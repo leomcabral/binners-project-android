@@ -16,6 +16,8 @@ import ca.com.androidbinnersproject.auth.GoogleAuth;
 import ca.com.androidbinnersproject.auth.OnAuthListener;
 import ca.com.androidbinnersproject.auth.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
+import ca.com.androidbinnersproject.auth.keys.KeyManager;
+import ca.com.androidbinnersproject.util.Logger;
 
 public class Login extends Activity implements OnAuthListener
 {
@@ -23,6 +25,8 @@ public class Login extends Activity implements OnAuthListener
     public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final int FROM_LOGIN = 25678;
+
+	private KeyManager keyManager;
 
 	private Authentication authentication;
 
@@ -42,6 +46,11 @@ public class Login extends Activity implements OnAuthListener
 		btnTwitter = (Button) findViewById(R.id.btnTwitter);
 
         initButtonListeners();
+
+        keyManager = new KeyManager(getResources());
+
+        if(!keyManager.RetrieveKeys())
+        	Logger.Error("Failed to retrieve keys");
     }
 
     private void initButtonListeners() {
@@ -50,7 +59,7 @@ public class Login extends Activity implements OnAuthListener
             public void onClick(View v) {
 //                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Login!");
 
-				authentication = new GoogleAuth(Login.this, Login.this);
+				authentication = new GoogleAuth(Login.this, Login.this, keyManager);
 				authentication.login();
             }
         });
@@ -58,17 +67,15 @@ public class Login extends Activity implements OnAuthListener
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-				authentication = new FacebookAuth(Login.this, Login.this);
+				authentication = new FacebookAuth(Login.this, Login.this, keyManager);
 				authentication.login();
             }
         });
 
-        btnTwitter.setOnClickListener(new View.OnClickListener()
-		{
+        btnTwitter.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
-				authentication = new TwitterAuth(Login.this, Login.this);
+			public void onClick(View v) {
+				authentication = new TwitterAuth(Login.this, Login.this, keyManager);
 				authentication.login();
 			}
 		});
@@ -94,7 +101,9 @@ public class Login extends Activity implements OnAuthListener
 
         editor.putBoolean(IS_AUTHENTICATED, true);
         editor.putString(ACCESS_TOKEN, profile.getAccessToken());
-        editor.commit();
+
+        //editor.commit();
+		editor.apply();
     }
 
     @Override

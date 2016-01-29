@@ -21,19 +21,24 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import ca.com.androidbinnersproject.auth.keys.KeyManager;
+
 public class FacebookAuth extends Authentication implements FacebookCallback<LoginResult>{
 
     private final CallbackManager facebookCallbackManager;
     private final LoginManager facebookLoginManager;
     private String LOG_TAG = getClass().getName();
 
-    public FacebookAuth(Activity activity, OnAuthListener listener) {
+    public FacebookAuth(Activity activity, OnAuthListener listener, KeyManager keyManager) {
         FacebookSdk.sdkInitialize(activity.getApplicationContext());
 
         this.activity = activity;
         facebookCallbackManager = CallbackManager.Factory.create();
         facebookLoginManager = LoginManager.getInstance();
         facebookLoginManager.registerCallback(facebookCallbackManager, this);
+
+        //FacebookSdk.setApplicationId();
+        //FacebookSdk.setClientToken();
 
 		if(listener != null)
         	setOnAuthListener(listener);
