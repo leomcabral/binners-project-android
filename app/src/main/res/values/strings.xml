@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Binners App</string>
+
+    <string name="packageName">ca.com.androidbinnersproject</string>
+
     <string name="login">Log In</string>
     <string name="txtLoginWith">Log in with</string>
     <string name="createAccount">Create an Account</string>
     <string name="forgotPassword">Forgot Password?</string>
 
-    <string name="log_tag">BinnersApp</string>
-
-    <string name="facebook_app_id">123456789</string>
     <string name="fabric_id">d78872197696ec6106cdc9761625d9950add5f65</string>
 </resources>
