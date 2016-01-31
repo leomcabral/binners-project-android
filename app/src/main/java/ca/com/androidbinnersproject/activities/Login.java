@@ -2,20 +2,30 @@
 package ca.com.androidbinnersproject.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.com.androidbinnersproject.R;
+import ca.com.androidbinnersproject.apis.AppLoginService;
+import ca.com.androidbinnersproject.apis.BaseAPI;
+import ca.com.androidbinnersproject.auth.AppAuth;
 import ca.com.androidbinnersproject.auth.Authentication;
 import ca.com.androidbinnersproject.auth.FacebookAuth;
 import ca.com.androidbinnersproject.auth.GoogleAuth;
 import ca.com.androidbinnersproject.auth.OnAuthListener;
 import ca.com.androidbinnersproject.auth.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
+import ca.com.androidbinnersproject.auth.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class Login extends Activity implements OnAuthListener
 {
@@ -29,8 +39,12 @@ public class Login extends Activity implements OnAuthListener
     private Button btnGoogle;
     private Button btnFacebook;
     private Button btnTwitter;
+    private Button btnLogin;
 
-    //private ProgressDialog mProgressDialog;
+    private EditText edtEmail;
+    private EditText edtPassword;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +53,11 @@ public class Login extends Activity implements OnAuthListener
 
         btnGoogle   = (Button) findViewById(R.id.btnGoogle);
         btnFacebook = (Button) findViewById(R.id.btnFacebook);
-		btnTwitter = (Button) findViewById(R.id.btnTwitter);
+		btnTwitter  = (Button) findViewById(R.id.btnTwitter);
+        btnLogin    = (Button) findViewById(R.id.btnLogin);
+        
+        edtEmail    = (EditText) findViewById(R.id.edtUser);
+        edtPassword = (EditText) findViewById(R.id.edtPassword);
 
         initButtonListeners();
     }
@@ -48,7 +66,7 @@ public class Login extends Activity implements OnAuthListener
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Login!");
+                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Google SignIn!");
 
 				authentication = new GoogleAuth(Login.this, Login.this);
 				authentication.login();
@@ -58,6 +76,7 @@ public class Login extends Activity implements OnAuthListener
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Facebook SignIn!");
 				authentication = new FacebookAuth(Login.this, Login.this);
 				authentication.login();
             }
@@ -68,48 +87,70 @@ public class Login extends Activity implements OnAuthListener
 			@Override
 			public void onClick(View v)
 			{
+                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Twitter SignIn!");
 				authentication = new TwitterAuth(Login.this, Login.this);
 				authentication.login();
 			}
 		});
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isEditFilled()) {
+                    mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing App SignIn!");
+
+                    authentication = new AppAuth(edtEmail.getText().toString(),
+                            edtPassword.getText().toString(), Login.this);
+
+                    authentication.login();
+                } else {
+                    Toast.makeText(Login.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
     public void onLoginSuccess(Profile profile) {
-  //      if(mProgressDialog != null)
-    //        mProgressDialog.dismiss();
+        dismissPDialog();
 
-        Toast.makeText(this, "Logged as " + profile.getName() + " | " + profile.getEmail() + " /   " + profile.getAccessToken() , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Logged as " + profile.getName() + " | " + profile.getEmail() + " /   " + profile.getToken() , Toast.LENGTH_LONG).show();
 
-        saveAuthenticatedUser(profile);
+        saveAuthenticatedUser(profile.getToken());
 
         setResult(RESULT_OK);
 
         finish();
-    }
 
-    private void saveAuthenticatedUser(Profile profile) {
-        SharedPreferences preferences = getSharedPreferences(USER_AUTHENTICATED, 0);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putBoolean(IS_AUTHENTICATED, true);
-        editor.putString(ACCESS_TOKEN, profile.getAccessToken());
-        editor.commit();
     }
 
     @Override
     public void onLoginError(String message) {
-
+        dismissPDialog();
     }
 
     @Override
     public void onLoginCancel() {
-
+        dismissPDialog();
     }
 
     @Override
     public void onRevoke() {
+        dismissPDialog();
+    }
 
+    private void dismissPDialog() {
+        if(mProgressDialog != null)
+            mProgressDialog.dismiss();
+    }
+
+    private void saveAuthenticatedUser(String token) {
+        SharedPreferences preferences = getSharedPreferences(USER_AUTHENTICATED, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putBoolean(IS_AUTHENTICATED, true);
+        editor.putString(ACCESS_TOKEN, token);
+        editor.commit();
     }
 
     @Override
@@ -131,5 +172,9 @@ public class Login extends Activity implements OnAuthListener
 		{
 			((TwitterAuth) authentication).authClient.onActivityResult(requestCode, resultCode, data);
 		}
+    }
+
+    public boolean isEditFilled() {
+        return edtEmail.getText().toString().length() > 0 && edtPassword.getText().toString().length() > 0;
     }
 }

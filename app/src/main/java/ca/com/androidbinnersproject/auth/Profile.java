@@ -5,9 +5,13 @@ package ca.com.androidbinnersproject.auth;
  */
 public class Profile {
     private String name;
-    private String email;
     private String urlImage;
-    private String accessToken;
+    private String token;
+    private User user;
+
+    public Profile() {
+        this.user = new User();
+    }
 
     public String getName() {
         return name;
@@ -18,11 +22,11 @@ public class Profile {
     }
 
     public String getEmail() {
-        return email;
+        return user.getEmail();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        user.setEmail(email);
     }
 
     public String getUrlImage() {
@@ -33,11 +37,19 @@ public class Profile {
         this.urlImage = urlImage;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getToken() {
+        return token;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
