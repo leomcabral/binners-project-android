@@ -15,13 +15,9 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Arrays;
-
-<<<<<<< HEAD
 import ca.com.androidbinnersproject.apis.AppLoginService;
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import ca.com.androidbinnersproject.apis.FacebookLoginService;
@@ -29,9 +25,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-=======
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
->>>>>>> upstream/dev
+
 
 public class FacebookAuth extends Authentication implements FacebookCallback<LoginResult>{
 

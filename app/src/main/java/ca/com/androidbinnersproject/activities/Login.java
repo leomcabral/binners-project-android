@@ -21,19 +21,16 @@ import ca.com.androidbinnersproject.auth.GoogleAuth;
 import ca.com.androidbinnersproject.auth.OnAuthListener;
 import ca.com.androidbinnersproject.auth.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
-<<<<<<< HEAD
 import ca.com.androidbinnersproject.auth.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-=======
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
 import ca.com.androidbinnersproject.util.Logger;
->>>>>>> upstream/dev
 
-public class Login extends Activity implements OnAuthListener
-{
+
+public class Login extends Activity implements OnAuthListener {
     public static String IS_AUTHENTICATED = "IS_AUTHENTICATED";
     public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static String ACCESS_TOKEN = "ACCESS_TOKEN";
@@ -88,27 +85,17 @@ public class Login extends Activity implements OnAuthListener
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-<<<<<<< HEAD
                 mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Facebook SignIn!");
-				authentication = new FacebookAuth(Login.this, Login.this);
-=======
 				authentication = new FacebookAuth(Login.this, Login.this, keyManager);
->>>>>>> upstream/dev
 				authentication.login();
             }
         });
 
         btnTwitter.setOnClickListener(new View.OnClickListener() {
 			@Override
-<<<<<<< HEAD
-			public void onClick(View v)
-			{
-                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Twitter SignIn!");
-				authentication = new TwitterAuth(Login.this, Login.this);
-=======
 			public void onClick(View v) {
+                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Twitter SignIn!");
 				authentication = new TwitterAuth(Login.this, Login.this, keyManager);
->>>>>>> upstream/dev
 				authentication.login();
 			}
 		});
@@ -141,15 +128,6 @@ public class Login extends Activity implements OnAuthListener
         setResult(RESULT_OK);
 
         finish();
-
-<<<<<<< HEAD
-=======
-        editor.putBoolean(IS_AUTHENTICATED, true);
-        editor.putString(ACCESS_TOKEN, profile.getAccessToken());
-
-        //editor.commit();
-		editor.apply();
->>>>>>> upstream/dev
     }
 
     @Override
@@ -182,22 +160,18 @@ public class Login extends Activity implements OnAuthListener
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(requestCode == GoogleAuth.GOOGLE_SIGN_IN)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == GoogleAuth.GOOGLE_SIGN_IN) {
             if(resultCode == RESULT_OK)
 				authentication.login();
             else
                 onLoginCancel();
 		}
-		else if(authentication instanceof FacebookAuth)
-		{
+		else if(authentication instanceof FacebookAuth) {
             if(resultCode == RESULT_OK)
 				((FacebookAuth) authentication).getFacebookCallbackManager().onActivityResult(requestCode, resultCode, data);
         }
-        else if(authentication instanceof TwitterAuth)
-		{
+        else if(authentication instanceof TwitterAuth) {
 			((TwitterAuth) authentication).authClient.onActivityResult(requestCode, resultCode, data);
 		}
     }
