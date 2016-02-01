@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+<<<<<<< HEAD
 import ca.com.androidbinnersproject.apis.AppLoginService;
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import ca.com.androidbinnersproject.apis.FacebookLoginService;
@@ -28,6 +29,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+=======
+import ca.com.androidbinnersproject.auth.keys.KeyManager;
+>>>>>>> upstream/dev
 
 public class FacebookAuth extends Authentication implements FacebookCallback<LoginResult>{
 
@@ -35,13 +39,16 @@ public class FacebookAuth extends Authentication implements FacebookCallback<Log
     private final LoginManager facebookLoginManager;
     private String LOG_TAG = getClass().getName();
 
-    public FacebookAuth(Activity activity, OnAuthListener listener) {
+    public FacebookAuth(Activity activity, OnAuthListener listener, KeyManager keyManager) {
         FacebookSdk.sdkInitialize(activity.getApplicationContext());
 
         this.activity = activity;
         facebookCallbackManager = CallbackManager.Factory.create();
         facebookLoginManager = LoginManager.getInstance();
         facebookLoginManager.registerCallback(facebookCallbackManager, this);
+
+        //FacebookSdk.setApplicationId();
+        //FacebookSdk.setClientToken();
 
 		if(listener != null)
         	setOnAuthListener(listener);

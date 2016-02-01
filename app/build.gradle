@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    }
+
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
@@ -12,13 +18,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        //multiDexEnabled true
     }
 
-    repositories {
-        mavenCentral()
-        maven { url 'https://maven.fabric.io/public' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    aaptOptions {
+        ignoreAssetsPattern 'keys/key'
     }
 
     buildTypes {
@@ -27,6 +30,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             ext.enableCrashlytics = false
+
         }
 
         debug {
@@ -57,4 +61,6 @@ dependencies {
 
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
+
+    compile 'com.scottyab:aes-crypto:0.0.4'
 }
