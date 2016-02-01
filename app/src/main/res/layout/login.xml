@@ -78,7 +78,9 @@
             android:id="@+id/edtUser"
             android:hint="email"
             android:paddingLeft="10dp"
-            android:paddingTop="10dp" />
+            android:paddingTop="10dp"
+            android:inputType="textAutoComplete"
+            android:maxLines="1" />
 
         <EditText
             android:layout_width="match_parent"
@@ -86,7 +88,9 @@
             android:id="@+id/edtPassword"
             android:hint="password"
             android:paddingLeft="10dp"
-            android:paddingTop="20dp" />
+            android:paddingTop="20dp"
+            android:inputType="textPassword"
+            android:maxLines="1" />
     </LinearLayout>
 
     <Button

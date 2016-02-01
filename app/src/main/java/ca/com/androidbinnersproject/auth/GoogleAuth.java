@@ -134,7 +134,7 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
         @Override
         protected void onPostExecute(String token) {
             Log.i(LOG_TAG, "Access token retrieved:" + token);
-            mProfile.setAccessToken(token);
+            mProfile.setToken(token);
             onAuthListener.onLoginSuccess(mProfile);
         }
     }
