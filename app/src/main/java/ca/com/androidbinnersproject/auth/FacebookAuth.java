@@ -102,6 +102,8 @@ public class FacebookAuth extends Authentication implements FacebookCallback<Log
                     Log.e(LOG_TAG, e.getMessage());
                 }
 
+                Log.i(LOG_TAG, "Facebook access token retrieved");
+
                 signInBackend(name, email, accessToken);
             }
         });
@@ -130,7 +132,7 @@ public class FacebookAuth extends Authentication implements FacebookCallback<Log
         call.enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Response<Profile> response) {
-
+                Log.i(LOG_TAG, "Backend login success!");
                 Profile profile = response.body();
                         profile.setName(name);
                         profile.setEmail(email);
@@ -140,7 +142,8 @@ public class FacebookAuth extends Authentication implements FacebookCallback<Log
 
             @Override
             public void onFailure(Throwable t) {
-                onAuthListener.onLoginError("Error on trying to log on the backend.");
+                Log.e(LOG_TAG, "Backend login failure!");
+                onAuthListener.onLoginError("Error on trying to log at the backend.");
             }
         });
     }

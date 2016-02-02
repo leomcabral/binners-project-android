@@ -21,7 +21,13 @@ import com.google.android.gms.plus.model.people.Person;
 
 import java.io.IOException;
 
+import ca.com.androidbinnersproject.apis.BaseAPI;
+import ca.com.androidbinnersproject.apis.GoogleLoginService;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class GoogleAuth extends Authentication implements ConnectionCallbacks, OnConnectionFailedListener {
 
@@ -125,7 +131,7 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         "oauth2:" + SCOPES);
             } catch (IOException | GoogleAuthException e) {
-                Log.e(LOG_TAG, "Error after trying to get access token" + token);
+                Log.e(LOG_TAG, "Error after trying to get access token");
             }
 
             return token;
@@ -133,9 +139,28 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
 
         @Override
         protected void onPostExecute(String token) {
-            Log.i(LOG_TAG, "Access token retrieved:" + token);
+            Log.i(LOG_TAG, "Google access token retrieved!");
             mProfile.setToken(token);
-            onAuthListener.onLoginSuccess(mProfile);
+
+            Retrofit retrofit = BaseAPI.getRetroInstance();
+
+            GoogleLoginService service = retrofit.create(GoogleLoginService.class);
+
+            Call<Profile> call = service.authenticate(token);
+
+            call.enqueue(new Callback<Profile>() {
+                @Override
+                public void onResponse(Response<Profile> response) {
+                    Log.i(LOG_TAG, "Backend login success!");
+                    onAuthListener.onLoginSuccess(mProfile);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e(LOG_TAG, "Backend login failure!");
+                    onAuthListener.onLoginError("Error on trying to log at the backend.");
+                }
+            });
         }
     }
 }
