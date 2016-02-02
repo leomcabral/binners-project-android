@@ -1,5 +1,7 @@
 package ca.com.androidbinnersproject.auth;
 
+import android.util.Log;
+
 import ca.com.androidbinnersproject.apis.AppLoginService;
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import retrofit2.Call;
@@ -13,6 +15,7 @@ import retrofit2.Retrofit;
 public class AppAuth extends Authentication {
 
     private User user;
+    private String LOG_TAG = getClass().getName();
 
     public AppAuth(String email, String password, OnAuthListener listener) {
         user = new User();
@@ -35,12 +38,13 @@ public class AppAuth extends Authentication {
         call.enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Response<Profile> response) {
+                Log.i(LOG_TAG, "Backend login success!");
                 onAuthListener.onLoginSuccess(response.body());
             }
 
             @Override
             public void onFailure(Throwable t) {
-
+                Log.e(LOG_TAG, "Backend login failure!");
             }
         });
     }
