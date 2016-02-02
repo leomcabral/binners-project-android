@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ import ca.com.androidbinnersproject.auth.OnAuthListener;
 import ca.com.androidbinnersproject.auth.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
 import ca.com.androidbinnersproject.auth.User;
+import ca.com.androidbinnersproject.util.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +33,7 @@ import ca.com.androidbinnersproject.auth.keys.KeyManager;
 import ca.com.androidbinnersproject.util.Logger;
 
 
-public class Login extends Activity implements OnAuthListener {
+public class Login extends Activity implements OnAuthListener, View.OnClickListener {
     public static String IS_AUTHENTICATED = "IS_AUTHENTICATED";
     public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static String ACCESS_TOKEN = "ACCESS_TOKEN";
@@ -63,58 +66,19 @@ public class Login extends Activity implements OnAuthListener {
         edtEmail    = (EditText) findViewById(R.id.edtUser);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
 
-        initButtonListeners();
-
         keyManager = new KeyManager(getResources());
 
         if(!keyManager.RetrieveKeys())
         	Logger.Error("Failed to retrieve keys");
+
+        initListeners();
     }
 
-    private void initButtonListeners() {
-        btnGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Google SignIn!");
-
-				authentication = new GoogleAuth(Login.this, Login.this, keyManager);
-				authentication.login();
-            }
-        });
-
-        btnFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Facebook SignIn!");
-				authentication = new FacebookAuth(Login.this, Login.this, keyManager);
-				authentication.login();
-            }
-        });
-
-        btnTwitter.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-                mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing Twitter SignIn!");
-				authentication = new TwitterAuth(Login.this, Login.this, keyManager);
-				authentication.login();
-			}
-		});
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isEditFilled()) {
-                    mProgressDialog = ProgressDialog.show(Login.this, "Login", "Executing App SignIn!");
-
-                    authentication = new AppAuth(edtEmail.getText().toString(),
-                            edtPassword.getText().toString(), Login.this);
-
-                    authentication.login();
-                } else {
-                    Toast.makeText(Login.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    private void initListeners() {
+        btnGoogle.setOnClickListener(this);
+        btnFacebook.setOnClickListener(this);
+        btnTwitter.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
     }
 
     @Override
@@ -178,5 +142,43 @@ public class Login extends Activity implements OnAuthListener {
 
     public boolean isEditFilled() {
         return edtEmail.getText().toString().length() > 0 && edtPassword.getText().toString().length() > 0;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(!Util.hasInternetConnection(Login.this)) {
+            Toast.makeText(Login.this, R.string.has_no_connection, Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
+        mProgressDialog = ProgressDialog.show(Login.this, "Login", this.getString(R.string.executing_sign_in));
+
+        switch (view.getId()) {
+            case R.id.btnFacebook:
+                authentication = new FacebookAuth(Login.this, Login.this, keyManager);
+                authentication.login();
+                break;
+            case R.id.btnTwitter:
+                authentication = new TwitterAuth(Login.this, Login.this, keyManager);
+                authentication.login();
+                break;
+            case R.id.btnGoogle:
+                authentication = new GoogleAuth(Login.this, Login.this, keyManager);
+                authentication.login();
+
+                break;
+            case R.id.btnLogin:
+                if (isEditFilled()) {
+                    authentication = new AppAuth(edtEmail.getText().toString(),
+                            edtPassword.getText().toString(), Login.this);
+
+                    authentication.login();
+                } else {
+                    dismissPDialog();
+                    Toast.makeText(Login.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 }

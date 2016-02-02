@@ -32,10 +32,6 @@ import retrofit2.Retrofit;
 public class GoogleAuth extends Authentication implements ConnectionCallbacks, OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
-    private ConnectionResult mConnectionResult;
-
-    private static final int RC_SIGN_IN = 0;
-
     public static final int GOOGLE_SIGN_IN = 101010;
     final String LOG_TAG = getClass().getName();
 
