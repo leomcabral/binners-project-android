@@ -171,10 +171,15 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
                 break;
             case R.id.btnLogin:
                 if (isEditFilled()) {
-                    authentication = new AppAuth(edtEmail.getText().toString(),
-                            edtPassword.getText().toString(), Login.this);
+                    if(Util.isEmailValid(edtEmail.getText().toString())) {
+                        authentication = new AppAuth(Login.this, edtEmail.getText().toString(),
+                                edtPassword.getText().toString(), Login.this);
 
-                    authentication.login();
+                        authentication.login();
+                    } else {
+                        Toast.makeText(Login.this, getApplicationContext().getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
+                        dismissPDialog();
+                    }
                 } else {
                     dismissPDialog();
                     Toast.makeText(Login.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
