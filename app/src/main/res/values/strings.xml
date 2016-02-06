@@ -13,4 +13,6 @@
     <string name="fill_login">Please write the e-mail and password correctly!</string>
     <string name="has_no_connection">Please check your internet connection!</string>
     <string name="executing_sign_in">Executing SignIn!</string>
+    <string name="login_error">There is a problem on trying to login. Try again!</string>
+    <string name="invalid_email">Please write a valid e-mail</string>
 </resources>

@@ -1,9 +1,12 @@
 package ca.com.androidbinnersproject.auth;
 
+import android.content.Context;
 import android.util.Log;
 
+import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.apis.AppLoginService;
 import ca.com.androidbinnersproject.apis.BaseAPI;
+import ca.com.androidbinnersproject.util.Logger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,10 +17,11 @@ import retrofit2.Retrofit;
  */
 public class AppAuth extends Authentication {
 
+    private Context mContext;
     private User user;
-    private String LOG_TAG = getClass().getName();
 
-    public AppAuth(String email, String password, OnAuthListener listener) {
+    public AppAuth(final Context context, String email, String password, OnAuthListener listener) {
+        mContext = context;
         user = new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -38,18 +42,18 @@ public class AppAuth extends Authentication {
         call.enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Response<Profile> response) {
-                Log.i(LOG_TAG, "Backend login success!");
+                Logger.Info("Backend login success!");
 
                 if(response.code() == 200) {
                     onAuthListener.onLoginSuccess(response.body());
                 } else {
-                    onAuthListener.onLoginError("There is a problem on trying to login. Try again!");
+                    onAuthListener.onLoginError(mContext.getString(R.string.login_error));
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e(LOG_TAG, "Backend login failure!");
+                Logger.Error("Backend login failure!");
             }
         });
     }
