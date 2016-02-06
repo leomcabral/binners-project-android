@@ -39,7 +39,12 @@ public class AppAuth extends Authentication {
             @Override
             public void onResponse(Response<Profile> response) {
                 Log.i(LOG_TAG, "Backend login success!");
-                onAuthListener.onLoginSuccess(response.body());
+
+                if(response.code() == 200) {
+                    onAuthListener.onLoginSuccess(response.body());
+                } else {
+                    onAuthListener.onLoginError("There is a problem on trying to login. Try again!");
+                }
             }
 
             @Override

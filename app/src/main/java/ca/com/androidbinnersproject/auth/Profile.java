@@ -8,6 +8,8 @@ public class Profile {
     private String urlImage;
     private String token;
     private User user;
+    private String statusCode;
+    private String error;
 
     public Profile() {
         this.user = new User();
@@ -51,5 +53,21 @@ public class Profile {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }
