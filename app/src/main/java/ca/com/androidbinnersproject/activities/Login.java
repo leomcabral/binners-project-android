@@ -97,6 +97,7 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
     @Override
     public void onLoginError(String message) {
         dismissPDialog();
+        Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
