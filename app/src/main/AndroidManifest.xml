@@ -33,6 +33,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activities.AboutAppActivity"></activity>
+
         <activity android:name=".activities.StartApp"></activity>
 
         <activity android:name=".activities.MainActivity"/>
