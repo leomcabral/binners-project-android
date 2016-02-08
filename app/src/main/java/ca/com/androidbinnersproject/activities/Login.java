@@ -72,6 +72,16 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
         	Logger.Error("Failed to retrieve keys");
 
         initListeners();
+
+        showAboutAppUI();
+    }
+
+    /**
+     * The intent AboutAppActivity will be shown before the login UI
+     */
+    private void showAboutAppUI() {
+        Intent intent = new Intent(this, AboutAppActivity.class);
+        startActivity(intent);
     }
 
     private void initListeners() {

@@ -33,13 +33,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.AboutAppActivity"></activity>
+        <activity android:name=".activities.AboutAppActivity" android:screenOrientation="portrait"></activity>
 
         <activity android:name=".activities.StartApp"></activity>
 
         <activity android:name=".activities.MainActivity"/>
 
-        <activity android:name=".activities.Login"/>
+        <activity android:name=".activities.Login" android:screenOrientation="portrait"/>
 
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

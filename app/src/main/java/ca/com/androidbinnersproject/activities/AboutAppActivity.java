@@ -39,8 +39,14 @@ public class AboutAppActivity extends FragmentActivity implements OnSkipListener
 
     @Override
     public void onClick() {
-        Intent intent = new Intent(this, StartApp.class);
-        startActivity(intent);
         finish();
+    }
+
+    /**
+     * Force the user click on the Skip button.
+     */
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }
