@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/backgroundApp"/>
+
+    <item>
+        <bitmap android:src="@drawable/start_p1_circle"
+            android:gravity="center"/>
+
+    </item>
+
+    <item>
+        <bitmap android:src="@drawable/start_p0_circle_binners"
+            android:gravity="center"/>
+
+    </item>
+
+</layer-list>
