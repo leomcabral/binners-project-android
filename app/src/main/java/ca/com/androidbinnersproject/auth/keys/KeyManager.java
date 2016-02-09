@@ -130,9 +130,11 @@ public class KeyManager
 				String[] keyPieces = line.split(":");
 
 				if(keyPieces[0].contentEquals("facebook"))
-					facebookApiKey = new ApiKey(keyPieces[1], keyPieces[2]);
+					//facebookApiKey = new ApiKey(keyPieces[1], keyPieces[2]);
+					facebookApiKey = new ApiKey(keyPieces[1], "");
 				else if(keyPieces[0].contentEquals("google"))
-					googleApiKey = new ApiKey(keyPieces[1], keyPieces[2]);
+					//googleApiKey = new ApiKey(keyPieces[1], keyPieces[2]);
+					googleApiKey = new ApiKey("", "");
 				else if(keyPieces[0].contentEquals("twitter"))
 					twitterApiKey = new ApiKey(keyPieces[1], keyPieces[2]);
 				else

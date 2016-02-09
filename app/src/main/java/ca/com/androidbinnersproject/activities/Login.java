@@ -6,31 +6,21 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.com.androidbinnersproject.R;
-import ca.com.androidbinnersproject.apis.AppLoginService;
-import ca.com.androidbinnersproject.apis.BaseAPI;
-import ca.com.androidbinnersproject.auth.AppAuth;
 import ca.com.androidbinnersproject.auth.Authentication;
 import ca.com.androidbinnersproject.auth.FacebookAuth;
 import ca.com.androidbinnersproject.auth.GoogleAuth;
 import ca.com.androidbinnersproject.auth.OnAuthListener;
 import ca.com.androidbinnersproject.auth.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
-import ca.com.androidbinnersproject.auth.User;
-import ca.com.androidbinnersproject.util.Util;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
 import ca.com.androidbinnersproject.util.Logger;
+import ca.com.androidbinnersproject.util.Util;
 
 
 public class Login extends Activity implements OnAuthListener, View.OnClickListener {
@@ -61,10 +51,10 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
         btnGoogle   = (Button) findViewById(R.id.btnGoogle);
         btnFacebook = (Button) findViewById(R.id.btnFacebook);
 		btnTwitter  = (Button) findViewById(R.id.btnTwitter);
-        btnLogin    = (Button) findViewById(R.id.btnLogin);
-        
-        edtEmail    = (EditText) findViewById(R.id.edtUser);
-        edtPassword = (EditText) findViewById(R.id.edtPassword);
+        //btnLogin    = (Button) findViewById(R.id.btnLogin);
+
+        edtEmail    = (EditText) findViewById(R.id.login_email_field);
+        edtPassword = (EditText) findViewById(R.id.login_password_field);
 
         keyManager = new KeyManager(getResources());
 
@@ -88,7 +78,7 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
         btnGoogle.setOnClickListener(this);
         btnFacebook.setOnClickListener(this);
         btnTwitter.setOnClickListener(this);
-        btnLogin.setOnClickListener(this);
+        //btnLogin.setOnClickListener(this);
     }
 
     @Override
@@ -166,24 +156,28 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
         mProgressDialog = ProgressDialog.show(Login.this, "Login", this.getString(R.string.executing_sign_in));
 
         switch (view.getId()) {
+
             case R.id.btnFacebook:
                 authentication = new FacebookAuth(Login.this, Login.this, keyManager);
                 authentication.login();
-                break;
+            break;
+
             case R.id.btnTwitter:
                 authentication = new TwitterAuth(Login.this, Login.this, keyManager);
                 authentication.login();
-                break;
+            break;
+
             case R.id.btnGoogle:
                 authentication = new GoogleAuth(Login.this, Login.this, keyManager);
                 authentication.login();
+            break;
 
-                break;
+			/*
             case R.id.btnLogin:
                 if (isEditFilled()) {
                     if(Util.isEmailValid(edtEmail.getText().toString())) {
                         authentication = new AppAuth(Login.this, edtEmail.getText().toString(),
-                                edtPassword.getText().toString(), Login.this);
+                                					edtPassword.getText().toString(), Login.this);
 
                         authentication.login();
                     } else {
@@ -195,6 +189,7 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
                     Toast.makeText(Login.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
                 }
                 break;
+            */
         }
     }
 }
