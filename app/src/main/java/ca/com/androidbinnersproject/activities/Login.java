@@ -6,12 +6,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import ca.com.androidbinnersproject.R;
+import ca.com.androidbinnersproject.auth.AppAuth;
 import ca.com.androidbinnersproject.auth.Authentication;
 import ca.com.androidbinnersproject.auth.FacebookAuth;
 import ca.com.androidbinnersproject.auth.GoogleAuth;
@@ -41,6 +44,8 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
     private EditText edtEmail;
     private EditText edtPassword;
 
+    private ImageView binnerResidentSelector;
+
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -48,13 +53,15 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        btnGoogle   = (Button) findViewById(R.id.btnGoogle);
-        btnFacebook = (Button) findViewById(R.id.btnFacebook);
-		btnTwitter  = (Button) findViewById(R.id.btnTwitter);
-        //btnLogin    = (Button) findViewById(R.id.btnLogin);
+        btnGoogle   = (Button) findViewById(R.id.login_button_google);
+        btnFacebook = (Button) findViewById(R.id.login_button_fb);
+		btnTwitter  = (Button) findViewById(R.id.login_button_twitter);
+        btnLogin    = (Button) findViewById(R.id.login_login_button);
 
         edtEmail    = (EditText) findViewById(R.id.login_email_field);
         edtPassword = (EditText) findViewById(R.id.login_password_field);
+
+        binnerResidentSelector = (ImageView) findViewById(R.id.login_binner_resident_selector);
 
         keyManager = new KeyManager(getResources());
 
@@ -78,7 +85,14 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
         btnGoogle.setOnClickListener(this);
         btnFacebook.setOnClickListener(this);
         btnTwitter.setOnClickListener(this);
-        //btnLogin.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
+
+		LoginEditTextFieldFocusChangeListener focusChangeListener = new LoginEditTextFieldFocusChangeListener();
+
+        edtEmail.setOnFocusChangeListener(focusChangeListener);
+        edtPassword.setOnFocusChangeListener(focusChangeListener);
+
+        binnerResidentSelector.setOnTouchListener(new LoginSelectorTouchListener());
     }
 
     @Override
@@ -157,23 +171,22 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
 
         switch (view.getId()) {
 
-            case R.id.btnFacebook:
+            case R.id.login_button_fb:
                 authentication = new FacebookAuth(Login.this, Login.this, keyManager);
                 authentication.login();
             break;
 
-            case R.id.btnTwitter:
+            case R.id.login_button_twitter:
                 authentication = new TwitterAuth(Login.this, Login.this, keyManager);
                 authentication.login();
             break;
 
-            case R.id.btnGoogle:
+            case R.id.login_button_google:
                 authentication = new GoogleAuth(Login.this, Login.this, keyManager);
                 authentication.login();
             break;
 
-			/*
-            case R.id.btnLogin:
+            case R.id.login_login_button:
                 if (isEditFilled()) {
                     if(Util.isEmailValid(edtEmail.getText().toString())) {
                         authentication = new AppAuth(Login.this, edtEmail.getText().toString(),
@@ -188,8 +201,55 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
                     dismissPDialog();
                     Toast.makeText(Login.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
                 }
-                break;
-            */
+            break;
         }
     }
+
+    private class LoginEditTextFieldFocusChangeListener implements View.OnFocusChangeListener {
+
+		@Override
+		public void onFocusChange(View v, boolean hasFocus) {
+
+			switch(v.getId()) {
+
+				case R.id.login_email_field:
+					SetEmailBlank(v, hasFocus);
+				break;
+
+				case R.id.login_password_field:
+					SetPasswordBlank(v, hasFocus);
+				break;
+			}
+		}
+
+		private void SetEmailBlank(View v, boolean blank) {
+			v.setBackground(getDrawable(blank ? R.drawable.login_email_blank : R.drawable.login_email));
+		}
+
+		private void SetPasswordBlank(View v, boolean blank) {
+			v.setBackground(getDrawable(blank ? R.drawable.login_password_blank : R.drawable.login_password));
+		}
+	}
+
+	private class LoginSelectorTouchListener implements View.OnTouchListener {
+
+		private MotionEvent.PointerCoords coords;
+
+		public LoginSelectorTouchListener() {
+			coords = new MotionEvent.PointerCoords();
+		}
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+
+			event.getPointerCoords(0, coords);
+			Select(v, coords.x <= v.getWidth() * 0.5f);
+
+			return true;
+		}
+
+		private void Select(View v, boolean binner) {
+			((ImageView) v).setImageDrawable(getDrawable(binner ? R.drawable.login_binner_selected : R.drawable.login_resident_selected));
+		}
+	}
 }

@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:focusableInTouchMode="true"
     tools:context="ca.com.androidbinnersproject.activities.Login"
     android:background="@drawable/login_bg">
 
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="28dp"
         app:layout_marginTopPercent="8%"
+        android:gravity="center_horizontal"
         android:layout_below="@id/login_binner_resident_selector"
         android:background="@drawable/login_email"
         android:inputType="textEmailAddress"
@@ -44,23 +46,26 @@
         android:layout_width="wrap_content"
         android:layout_height="28dp"
         app:layout_marginTopPercent="5%"
+        android:gravity="center_horizontal"
         android:layout_below="@id/login_email_field"
         android:background="@drawable/login_password"
         android:inputType="textPassword"
         android:maxLines="1"/>
 
-    <ImageView
+    <Button
         android:id="@+id/login_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_heightPercent="7%"
         app:layout_marginTopPercent="2%"
         android:layout_below="@id/login_password_field"
-        android:src="@drawable/login_login_button"/>
+        android:background="@drawable/login_login_button"/>
 
     <ImageView
         android:id="@+id/login_or_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_marginTopPercent="3%"
         android:layout_below="@id/login_login_button"
         android:src="@drawable/login_or_line"/>
 
@@ -73,7 +78,7 @@
         app:layout_marginTopPercent="3%">
 
         <Button
-            android:id="@+id/btnFacebook"
+            android:id="@+id/login_button_fb"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/login_fb"
@@ -82,7 +87,7 @@
             android:layout_marginEnd="20dp"/>
 
         <Button
-            android:id="@+id/btnGoogle"
+            android:id="@+id/login_button_google"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/login_google"
@@ -91,7 +96,7 @@
             android:layout_marginEnd="20dp"/>
 
         <Button
-            android:id="@+id/btnTwitter"
+            android:id="@+id/login_button_twitter"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/login_twitter"
