@@ -1,26 +1,26 @@
 
 package ca.com.androidbinnersproject.auth;
 
-import android.app.Activity;
-import android.content.IntentSender;
-import android.os.AsyncTask;
-import android.os.Bundle;
+import android.accounts.Account;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
 
 import java.io.IOException;
 
+import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import ca.com.androidbinnersproject.apis.GoogleLoginService;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
@@ -29,23 +29,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class GoogleAuth extends Authentication implements ConnectionCallbacks, OnConnectionFailedListener {
+public class GoogleAuth extends Authentication implements OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
-    public static final int GOOGLE_SIGN_IN = 101010;
+    public static final int GOOGLE_SIGN_IN = 10;
     final String LOG_TAG = getClass().getName();
+
+    GoogleSignInOptions mGso;
+
 
     final Profile mProfile = new Profile();
 
-    public GoogleAuth(Activity activity, OnAuthListener listener, KeyManager keyManager) {
+    public GoogleAuth(AppCompatActivity activity, OnAuthListener listener, KeyManager keyManager) {
         this.activity = activity;
 
+        mGso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
         mGoogleApiClient = new GoogleApiClient.Builder(activity)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Plus.API)
-                .addScope(Plus.SCOPE_PLUS_PROFILE)
-                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+                .enableAutoManage(activity /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, mGso)
+                .build();
 
 		if(listener != null)
         	setOnAuthListener(listener);
@@ -53,69 +58,76 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
 
     @Override
     public void login() {
-        if(!mGoogleApiClient.isConnected() || !mGoogleApiClient.isConnecting()) {
-            mGoogleApiClient.connect();
-        }
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        activity.startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
 
     @Override
     public void logout() {
-        if(mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+
     }
 
     @Override
     public void revoke() {
-        if(mGoogleApiClient.isConnected()) {
-            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient).setResultCallback(
-                    new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(@NonNull Status status) {
-                            onAuthListener.onRevoke();
-                        }
-                    }
-            );
-        }
-    }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-
-        mProfile.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
-        mProfile.setName(person.getDisplayName());
-
-        AccessTokenRequest tokenRequest = new AccessTokenRequest();
-        tokenRequest.execute();
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        mGoogleApiClient.connect();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        if(connectionResult.hasResolution()) {
-            try {
-            	if(connectionResult.getResolution() != null)
-					activity.startIntentSenderForResult(connectionResult.getResolution().getIntentSender(),
-							GOOGLE_SIGN_IN, null, 0, 0, 0);
-            } catch (IntentSender.SendIntentException e) {
-                Log.e(LOG_TAG, e.getMessage());
-                mGoogleApiClient.connect();
-            }
-        } else {
-            String message = "Google Plus Error: "+ connectionResult.getErrorCode();
-            Log.e(LOG_TAG, message);
 
-			if(onAuthListener != null)
-            	onAuthListener.onLoginError(message);
+    }
+
+    public void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+            /*String scopes = "oauth2:profile email";
+
+            Account androidAccount = new Account(acct.getDisplayName(), "");
+
+            String token = "";
+
+            try {
+                token = GoogleAuthUtil.getToken(activity, androidAccount, scopes);
+            } catch (IOException | GoogleAuthException e ) {
+
+            }*/
+
+            signInBackend(acct.getDisplayName(), acct.getEmail(), acct.getIdToken());
+        } else {
+            Log.e(LOG_TAG, "Google login failure!");
+            onAuthListener.onLoginError("Error on trying to log at the backend.");
         }
     }
 
-    private class AccessTokenRequest extends AsyncTask<Void, Void, String>{
+    private void signInBackend(final String name, final String email, String accessToken) {
+        Retrofit retrofit = BaseAPI.getRetroInstance();
+
+        GoogleLoginService service = retrofit.create(GoogleLoginService.class);
+
+        Call<Profile> call = service.authenticate(accessToken);
+
+        call.enqueue(new Callback<Profile>() {
+            @Override
+            public void onResponse(Response<Profile> response) {
+                Log.i(LOG_TAG, "Backend login success!");
+                Profile profile = response.body();
+                profile.setName(name);
+                profile.setEmail(email);
+
+                onAuthListener.onLoginSuccess(profile);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(LOG_TAG, "Backend login failure!");
+                onAuthListener.onLoginError("Error on trying to log at the backend.");
+            }
+        });
+    }
+
+    /*private class AccessTokenRequest extends AsyncTask<Void, Void, String>{
         @Override
         protected String doInBackground(Void... params) {
             String token = null;
@@ -158,5 +170,5 @@ public class GoogleAuth extends Authentication implements ConnectionCallbacks, O
                 }
             });
         }
-    }
+    }*/
 }

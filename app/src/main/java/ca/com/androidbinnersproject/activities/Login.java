@@ -6,12 +6,21 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.auth.AppAuth;
@@ -26,7 +35,7 @@ import ca.com.androidbinnersproject.util.Logger;
 import ca.com.androidbinnersproject.util.Util;
 
 
-public class Login extends Activity implements OnAuthListener, View.OnClickListener {
+public class Login extends AppCompatActivity implements OnAuthListener, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     public static String IS_AUTHENTICATED = "IS_AUTHENTICATED";
     public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static String ACCESS_TOKEN = "ACCESS_TOKEN";
@@ -47,6 +56,7 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
     private ImageView binnerResidentSelector;
 
     private ProgressDialog mProgressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +151,8 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == GoogleAuth.GOOGLE_SIGN_IN) {
-            if(resultCode == RESULT_OK)
-				authentication.login();
-            else
-                onLoginCancel();
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            ((GoogleAuth) authentication).handleSignInResult(result);
 		}
 		else if(authentication instanceof FacebookAuth) {
             if(resultCode == RESULT_OK)
@@ -172,17 +180,20 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
         switch (view.getId()) {
 
             case R.id.login_button_fb:
-                authentication = new FacebookAuth(Login.this, Login.this, keyManager);
+                if(authentication == null && !(authentication instanceof FacebookAuth) )
+                    authentication = new FacebookAuth(Login.this, Login.this, keyManager);
                 authentication.login();
             break;
 
             case R.id.login_button_twitter:
-                authentication = new TwitterAuth(Login.this, Login.this, keyManager);
+                if(authentication == null && !(authentication instanceof TwitterAuth) )
+                    authentication = new TwitterAuth(Login.this, Login.this, keyManager);
                 authentication.login();
             break;
 
             case R.id.login_button_google:
-                authentication = new GoogleAuth(Login.this, Login.this, keyManager);
+                if(authentication == null && !(authentication instanceof GoogleAuth) )
+                    authentication = new GoogleAuth(Login.this, Login.this, keyManager);
                 authentication.login();
             break;
 
@@ -203,6 +214,11 @@ public class Login extends Activity implements OnAuthListener, View.OnClickListe
                 }
             break;
         }
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 
     private class LoginEditTextFieldFocusChangeListener implements View.OnFocusChangeListener {
