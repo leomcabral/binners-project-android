@@ -42,7 +42,7 @@ public class FacebookAuth extends Authentication implements FacebookCallback<Log
         facebookLoginManager = LoginManager.getInstance();
         facebookLoginManager.registerCallback(facebookCallbackManager, this);
 
-        //FacebookSdk.setApplicationId();
+        //FacebookSdk.setApplicationId("");
         //FacebookSdk.setClientToken();
 
 		if(listener != null)
