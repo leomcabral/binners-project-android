@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:textSize="18sp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:textColor="#ffffff" />
 
     <ImageView
         android:id="@+id/create_user_binners_logo"
@@ -87,14 +88,16 @@
         android:layout_below="@+id/create_user_btnGetStarted"
         android:gravity="center_horizontal"
         app:layout_marginTopPercent="2%"
-        android:text="@string/create_user_without_permission"/>
+        android:text="@string/create_user_without_permission"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
-        android:text="@string/create_user_terms_privacy"/>
+        android:text="@string/create_user_terms_privacy"
+        android:textColor="#ffffff" />
 
 
 </android.support.percent.PercentRelativeLayout>

@@ -116,7 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:text="@string/createAccount" />
+            android:text="@string/createAccount"
+            android:id="@+id/login_btnCreateAccount" />
 
         <Button
             android:layout_width="wrap_content"
