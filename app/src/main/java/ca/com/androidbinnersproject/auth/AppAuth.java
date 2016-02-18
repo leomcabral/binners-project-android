@@ -1,11 +1,12 @@
 package ca.com.androidbinnersproject.auth;
 
 import android.content.Context;
-import android.util.Log;
 
 import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.apis.AppLoginService;
 import ca.com.androidbinnersproject.apis.BaseAPI;
+import ca.com.androidbinnersproject.models.Profile;
+import ca.com.androidbinnersproject.models.User;
 import ca.com.androidbinnersproject.util.Logger;
 import retrofit2.Call;
 import retrofit2.Callback;

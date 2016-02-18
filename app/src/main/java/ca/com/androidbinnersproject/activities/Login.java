@@ -1,7 +1,6 @@
 
 package ca.com.androidbinnersproject.activities;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,11 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import ca.com.androidbinnersproject.R;
@@ -28,7 +24,7 @@ import ca.com.androidbinnersproject.auth.Authentication;
 import ca.com.androidbinnersproject.auth.FacebookAuth;
 import ca.com.androidbinnersproject.auth.GoogleAuth;
 import ca.com.androidbinnersproject.auth.OnAuthListener;
-import ca.com.androidbinnersproject.auth.Profile;
+import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
 import ca.com.androidbinnersproject.util.Logger;

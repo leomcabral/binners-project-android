@@ -1,4 +1,4 @@
-package ca.com.androidbinnersproject.auth;
+package ca.com.androidbinnersproject.models;
 
 /**
  * Created by jonathan_campos on 28/01/2016.

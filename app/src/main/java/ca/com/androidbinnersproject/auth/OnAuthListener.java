@@ -1,5 +1,7 @@
 package ca.com.androidbinnersproject.auth;
 
+import ca.com.androidbinnersproject.models.Profile;
+
 /**
  * Created by jonathan_campos on 18/01/2016.
  */
