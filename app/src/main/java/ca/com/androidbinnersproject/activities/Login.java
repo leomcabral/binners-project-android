@@ -45,6 +45,7 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
     private Button btnFacebook;
     private Button btnTwitter;
     private Button btnLogin;
+    private Button btnCreateAccount;
 
     private EditText edtEmail;
     private EditText edtPassword;
@@ -63,6 +64,7 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
         btnFacebook = (Button) findViewById(R.id.login_button_fb);
 		btnTwitter  = (Button) findViewById(R.id.login_button_twitter);
         btnLogin    = (Button) findViewById(R.id.login_login_button);
+        btnCreateAccount = (Button) findViewById(R.id.login_btnCreateAccount);
 
         edtEmail    = (EditText) findViewById(R.id.login_email_field);
         edtPassword = (EditText) findViewById(R.id.login_password_field);
@@ -92,6 +94,14 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
         btnFacebook.setOnClickListener(this);
         btnTwitter.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+
+        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent createUserIntent = new Intent(Login.this, CreateAccountActivity.class);
+                startActivityForResult(createUserIntent, CreateAccountActivity.CREATE_ACCOUNT_RESULT);
+            }
+        });
 
 		LoginEditTextFieldFocusChangeListener focusChangeListener = new LoginEditTextFieldFocusChangeListener();
 
@@ -157,6 +167,12 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
         else if(authentication instanceof TwitterAuth) {
 			((TwitterAuth) authentication).authClient.onActivityResult(requestCode, resultCode, data);
 		}
+
+        if(requestCode == CreateAccountActivity.CREATE_ACCOUNT_RESULT) {
+            if(resultCode == RESULT_OK) {
+
+            }
+        }
     }
 
     public boolean isEditFilled() {
