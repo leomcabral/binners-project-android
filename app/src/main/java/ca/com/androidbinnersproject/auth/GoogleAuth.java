@@ -23,6 +23,7 @@ import java.io.IOException;
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import ca.com.androidbinnersproject.apis.GoogleLoginService;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
+import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.util.Logger;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +43,7 @@ public class GoogleAuth extends Authentication implements OnConnectionFailedList
         this.activity = activity;
 
         mGso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("")
+                .requestIdToken("231464068093-lc3csen415qpse4skdrlmc6shjmtdthb.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
