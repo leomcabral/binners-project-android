@@ -17,4 +17,7 @@
     <string name="invalid_email">Please write a valid e-mail</string>
     <string name="create_user_without_permission">We will never post without your permission.</string>
     <string name="create_user_terms_privacy">By signing up I agree to the Binner\'s Project Service Terms and Privacy Policy</string>
+    <string name="create_user_validation_name">Name should not be empty</string>
+    <string name="create_user_validation_email">Email should be valid</string>
+    <string name="create_user_validation_password">Password need at least 6 characters</string>
 </resources>

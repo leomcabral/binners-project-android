@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-public class StartApp extends Activity {
+public class StartAppActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,8 +17,8 @@ public class StartApp extends Activity {
 		if(isLogged()) {
 			intent.setClass(this, MainActivity.class);
 		}  else {
-			intent.setClass(this, Login.class);
-			startActivityForResult(intent, Login.FROM_LOGIN);
+			intent.setClass(this, LoginActivity.class);
+			startActivityForResult(intent, LoginActivity.FROM_LOGIN);
 			return;
 		}
 
@@ -26,13 +26,13 @@ public class StartApp extends Activity {
     }
 
 	public boolean isLogged() {
-		SharedPreferences preferences = getSharedPreferences(Login.USER_AUTHENTICATED, 0);
-		return preferences.getBoolean(Login.IS_AUTHENTICATED, false);
+		SharedPreferences preferences = getSharedPreferences(LoginActivity.USER_AUTHENTICATED, 0);
+		return preferences.getBoolean(LoginActivity.IS_AUTHENTICATED, false);
 	}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == Login.FROM_LOGIN) {
+        if(requestCode == LoginActivity.FROM_LOGIN) {
             if(resultCode == RESULT_OK) {
                 Intent intent = new Intent();
                 intent.setClass(this, MainActivity.class);

@@ -31,7 +31,7 @@ import ca.com.androidbinnersproject.util.Logger;
 import ca.com.androidbinnersproject.util.Util;
 
 
-public class Login extends AppCompatActivity implements OnAuthListener, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity implements OnAuthListener, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     public static String IS_AUTHENTICATED = "IS_AUTHENTICATED";
     public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static String ACCESS_TOKEN = "ACCESS_TOKEN";
@@ -98,15 +98,10 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent createUserIntent = new Intent(Login.this, CreateAccountActivity.class);
+                Intent createUserIntent = new Intent(LoginActivity.this, CreateAccountActivity.class);
                 startActivityForResult(createUserIntent, CreateAccountActivity.CREATE_ACCOUNT_RESULT);
             }
         });
-
-		LoginEditTextFieldFocusChangeListener focusChangeListener = new LoginEditTextFieldFocusChangeListener();
-
-        edtEmail.setOnFocusChangeListener(focusChangeListener);
-        edtPassword.setOnFocusChangeListener(focusChangeListener);
 
         binnerResidentSelector.setOnTouchListener(new LoginSelectorTouchListener());
     }
@@ -127,7 +122,7 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
     @Override
     public void onLoginError(String message) {
         dismissPDialog();
-        Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -181,48 +176,48 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
 
     @Override
     public void onClick(View view) {
-        if(!Util.hasInternetConnection(Login.this)) {
-            Toast.makeText(Login.this, R.string.has_no_connection, Toast.LENGTH_SHORT).show();
+        if(!Util.hasInternetConnection(LoginActivity.this)) {
+            Toast.makeText(LoginActivity.this, R.string.has_no_connection, Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-        mProgressDialog = ProgressDialog.show(Login.this, "Login", this.getString(R.string.executing_sign_in));
+        mProgressDialog = ProgressDialog.show(LoginActivity.this, "Login", this.getString(R.string.executing_sign_in));
 
         switch (view.getId()) {
 
             case R.id.login_button_fb:
                 if(authentication == null && !(authentication instanceof FacebookAuth) )
-                    authentication = new FacebookAuth(Login.this, Login.this, keyManager);
+                    authentication = new FacebookAuth(LoginActivity.this, LoginActivity.this, keyManager);
                 authentication.login();
             break;
 
             case R.id.login_button_twitter:
                 if(authentication == null && !(authentication instanceof TwitterAuth) )
-                    authentication = new TwitterAuth(Login.this, Login.this, keyManager);
+                    authentication = new TwitterAuth(LoginActivity.this, LoginActivity.this, keyManager);
                 authentication.login();
             break;
 
             case R.id.login_button_google:
                 if(authentication == null && !(authentication instanceof GoogleAuth) )
-                    authentication = new GoogleAuth(Login.this, Login.this, keyManager);
+                    authentication = new GoogleAuth(LoginActivity.this, LoginActivity.this, keyManager);
                 authentication.login();
             break;
 
             case R.id.login_login_button:
                 if (isEditFilled()) {
                     if(Util.isEmailValid(edtEmail.getText().toString())) {
-                        authentication = new AppAuth(Login.this, edtEmail.getText().toString(),
-                                					edtPassword.getText().toString(), Login.this);
+                        authentication = new AppAuth(LoginActivity.this, edtEmail.getText().toString(),
+                                					edtPassword.getText().toString(), LoginActivity.this);
 
                         authentication.login();
                     } else {
-                        Toast.makeText(Login.this, getApplicationContext().getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, getApplicationContext().getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
                         dismissPDialog();
                     }
                 } else {
                     dismissPDialog();
-                    Toast.makeText(Login.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getApplicationContext().getString(R.string.fill_login), Toast.LENGTH_SHORT).show();
                 }
             break;
         }
@@ -232,32 +227,6 @@ public class Login extends AppCompatActivity implements OnAuthListener, View.OnC
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
-
-    private class LoginEditTextFieldFocusChangeListener implements View.OnFocusChangeListener {
-
-		@Override
-		public void onFocusChange(View v, boolean hasFocus) {
-
-			switch(v.getId()) {
-
-				case R.id.login_email_field:
-					SetEmailBlank(v, hasFocus);
-				break;
-
-				case R.id.login_password_field:
-					SetPasswordBlank(v, hasFocus);
-				break;
-			}
-		}
-
-		private void SetEmailBlank(View v, boolean blank) {
-			v.setBackground(getDrawable(blank ? R.drawable.login_email_blank : R.drawable.login_email));
-		}
-
-		private void SetPasswordBlank(View v, boolean blank) {
-			v.setBackground(getDrawable(blank ? R.drawable.login_password_blank : R.drawable.login_password));
-		}
-	}
 
 	private class LoginSelectorTouchListener implements View.OnTouchListener {
 
