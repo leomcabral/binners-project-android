@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.com.androidbinnersproject.activities.Login">
+    tools:context=".activities.LoginActivity">
 
     <ImageView
         android:id="@+id/login_binners_logo"
