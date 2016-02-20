@@ -64,7 +64,7 @@
         app:layout_heightPercent="8%"
         android:textColor="#26752d"
         android:background="@color/backgroundApp"
-        android:text="Skip"
+        android:text="Done"
         android:textStyle="bold"
         android:textAlignment="textEnd"
         app:layout_marginRightPercent="3%"

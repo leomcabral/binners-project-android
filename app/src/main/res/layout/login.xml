@@ -21,110 +21,140 @@
         android:src="@drawable/logo"
         app:layout_marginTopPercent="2%" />
 
-    <ImageView
+    <ToggleButton
         android:id="@+id/login_binner_resident_selector"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@id/login_binners_logo"
-        android:layout_gravity="center"
-        android:src="@drawable/login_resident_selected"
-        app:layout_marginTopPercent="8%" />
-
-    <EditText
-        android:id="@+id/login_email_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_binner_resident_selector"
-        android:gravity="center_horizontal"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:maxLines="1"
-        app:layout_marginTopPercent="8%" />
-
-    <EditText
-        android:id="@+id/login_password_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_email_field"
-        android:gravity="center_horizontal"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        app:layout_marginTopPercent="5%" />
-
-    <Button
-        android:id="@+id/login_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_password_field"
-        android:background="@drawable/login_login_button"
-        app:layout_heightPercent="7%"
-        app:layout_marginTopPercent="2%" />
+        android:layout_below="@+id/login_binners_logo"
+        android:layout_gravity="right"
+        android:background="@drawable/binner_resident_selector"
+        android:checked="true"
+        android:textOff=" "
+        android:textOn=" "
+        app:layout_heightPercent="5%"
+        app:layout_marginLeftPercent="10%"
+        app:layout_marginRightPercent="10%"
+        app:layout_marginTopPercent="8%"
+        app:layout_widthPercent="80%" />
 
-    <ImageView
-        android:id="@+id/login_or_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_login_button"
-        android:src="@drawable/login_or_line"
-        app:layout_marginTopPercent="3%" />
-
-    <LinearLayout
-        android:id="@+id/login_social_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_or_line"
-        android:orientation="horizontal"
-        app:layout_marginTopPercent="3%">
-
-        <Button
-            android:id="@+id/login_button_fb"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/login_fb" />
-
-        <Button
-            android:id="@+id/login_button_google"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/login_google"/>
-
-        <Button
-            android:id="@+id/login_button_twitter"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/login_twitter" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
+    <ViewSwitcher
+        android:id="@+id/login_vs_binner_resident"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/login_binner_resident_selector">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="@string/createAccount"
-            android:id="@+id/login_btnCreateAccount" />
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="@string/forgotPassword" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/login_email_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center_horizontal"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                app:layout_marginTopPercent="8%" />
+
+            <EditText
+                android:id="@+id/login_password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_email_field"
+                android:gravity="center_horizontal"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                app:layout_marginTopPercent="5%" />
+
+            <Button
+                android:id="@+id/login_login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_below="@id/login_password_field"
+                android:background="@drawable/login_login_button"
+                app:layout_heightPercent="10%"
+                app:layout_marginTopPercent="2%" />
+
+            <ImageView
+                android:id="@+id/login_or_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_login_button"
+                android:src="@drawable/login_or_line"
+                app:layout_marginTopPercent="3%" />
+
+            <LinearLayout
+                android:id="@+id/login_social_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_or_line"
+                android:orientation="horizontal"
+                app:layout_marginTopPercent="4%">
+
+                <Button
+                    android:id="@+id/login_button_fb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_fb" />
+
+                <Button
+                    android:id="@+id/login_button_google"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_google" />
+
+                <Button
+                    android:id="@+id/login_button_twitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_twitter" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/login_btnCreateAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="left|bottom"
+                    android:text="@string/createAccount"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="right"
+                    android:text="@string/forgotPassword"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </android.support.percent.PercentRelativeLayout >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
+
+    </ViewSwitcher>
 
 </android.support.percent.PercentRelativeLayout>
