@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+import android.widget.ViewSwitcher;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -41,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
 
 	private Authentication authentication;
 
+    private ViewSwitcher vsBinnerResident;
+
     private Button btnGoogle;
     private Button btnFacebook;
     private Button btnTwitter;
@@ -50,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
     private EditText edtEmail;
     private EditText edtPassword;
 
-    private ImageView binnerResidentSelector;
+    private ToggleButton binnerResidentSelector;
 
     private ProgressDialog mProgressDialog;
 
@@ -59,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        vsBinnerResident = (ViewSwitcher) findViewById(R.id.login_vs_binner_resident);
 
         btnGoogle   = (Button) findViewById(R.id.login_button_google);
         btnFacebook = (Button) findViewById(R.id.login_button_fb);
@@ -69,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
         edtEmail    = (EditText) findViewById(R.id.login_email_field);
         edtPassword = (EditText) findViewById(R.id.login_password_field);
 
-        binnerResidentSelector = (ImageView) findViewById(R.id.login_binner_resident_selector);
+        binnerResidentSelector = (ToggleButton) findViewById(R.id.login_binner_resident_selector);
 
         keyManager = new KeyManager(getResources());
 
@@ -90,6 +97,18 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
     }
 
     private void initListeners() {
+
+        binnerResidentSelector.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if(checked) {
+                    vsBinnerResident.showPrevious();
+                } else {
+                    vsBinnerResident.showNext();
+                }
+            }
+        });
+
         btnGoogle.setOnClickListener(this);
         btnFacebook.setOnClickListener(this);
         btnTwitter.setOnClickListener(this);
@@ -102,8 +121,6 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
                 startActivityForResult(createUserIntent, CreateAccountActivity.CREATE_ACCOUNT_RESULT);
             }
         });
-
-        binnerResidentSelector.setOnTouchListener(new LoginSelectorTouchListener());
     }
 
     @Override
@@ -227,26 +244,4 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
-
-	private class LoginSelectorTouchListener implements View.OnTouchListener {
-
-		private MotionEvent.PointerCoords coords;
-
-		public LoginSelectorTouchListener() {
-			coords = new MotionEvent.PointerCoords();
-		}
-
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-
-			event.getPointerCoords(0, coords);
-			Select(v, coords.x <= v.getWidth() * 0.5f);
-
-			return true;
-		}
-
-		private void Select(View v, boolean binner) {
-			((ImageView) v).setImageDrawable(getDrawable(binner ? R.drawable.login_binner_selected : R.drawable.login_resident_selected));
-		}
-	}
 }
