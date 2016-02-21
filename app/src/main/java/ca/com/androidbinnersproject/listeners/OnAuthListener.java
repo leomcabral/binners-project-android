@@ -1,4 +1,4 @@
-package ca.com.androidbinnersproject.auth;
+package ca.com.androidbinnersproject.listeners;
 
 import ca.com.androidbinnersproject.models.Profile;
 

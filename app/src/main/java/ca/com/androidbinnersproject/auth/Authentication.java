@@ -2,6 +2,8 @@ package ca.com.androidbinnersproject.auth;
 
 import android.app.Activity;
 
+import ca.com.androidbinnersproject.listeners.OnAuthListener;
+
 /**
  * Created by jonathan_campos on 18/01/2016.
  */

@@ -1,12 +1,23 @@
 package ca.com.androidbinnersproject.models;
 
+import java.io.Serializable;
+
 /**
  * Created by jonathan_campos on 28/01/2016.
  */
-public class User {
+public class User implements Serializable{
     private String id;
+    private String name;
     private String email;
     private String password;
+
+    public User(){}
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getId() {
         return id;
@@ -14,6 +25,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

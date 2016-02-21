@@ -23,6 +23,7 @@ import java.io.IOException;
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import ca.com.androidbinnersproject.apis.GoogleLoginService;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
+import ca.com.androidbinnersproject.listeners.OnAuthListener;
 import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.util.Logger;
 import retrofit2.Call;

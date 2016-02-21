@@ -5,6 +5,7 @@ import android.content.Context;
 import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.apis.AppLoginService;
 import ca.com.androidbinnersproject.apis.BaseAPI;
+import ca.com.androidbinnersproject.listeners.OnAuthListener;
 import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.models.User;
 import ca.com.androidbinnersproject.util.Logger;

@@ -1,10 +1,15 @@
 package ca.com.androidbinnersproject.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by jonathan_campos on 18/01/2016.
  */
-public class Profile {
-    private String name;
+public class Profile implements Serializable{
+
     private String urlImage;
     private String token;
     private User user;
@@ -14,11 +19,11 @@ public class Profile {
     }
 
     public String getName() {
-        return name;
+        return user.getName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        user.setName(name);
     }
 
     public String getEmail() {

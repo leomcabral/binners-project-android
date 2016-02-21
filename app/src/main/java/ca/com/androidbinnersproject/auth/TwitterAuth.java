@@ -13,6 +13,7 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import ca.com.androidbinnersproject.auth.keys.ApiKey;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
+import ca.com.androidbinnersproject.listeners.OnAuthListener;
 import ca.com.androidbinnersproject.util.Logger;
 import io.fabric.sdk.android.Fabric;
 
