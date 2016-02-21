@@ -2,19 +2,24 @@ package ca.com.androidbinnersproject.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import ca.com.androidbinnersproject.R;
+import ca.com.androidbinnersproject.bll.CreateAccount;
+import ca.com.androidbinnersproject.listeners.ResponseListener;
+import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.util.Util;
 
 /**
  * Created by jonathan_campos on 18/02/2016.
  */
-public class CreateAccountActivity extends Activity{
+public class CreateAccountActivity extends Activity implements ResponseListener<Profile> {
     public static final int CREATE_ACCOUNT_RESULT = 1;
 
     private ImageView imgBinnerResidentSelector;
@@ -24,6 +29,8 @@ public class CreateAccountActivity extends Activity{
     private Button btnGetStarted;
 
     private ProgressDialog mProgressDialog;
+
+    private CreateAccount mCreateAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +47,14 @@ public class CreateAccountActivity extends Activity{
             @Override
             public void onClick(View view) {
                 if(validateInputs()) {
-
+                    mCreateAccount.newUser(edtName.getText().toString(),
+                            edtEmail.getText().toString(),
+                            edtPassword.getText().toString());
                 }
             }
         });
+
+        mCreateAccount = new CreateAccount(this);
     }
 
     private boolean validateInputs() {
@@ -71,5 +82,22 @@ public class CreateAccountActivity extends Activity{
         }
 
         return result;
+    }
+
+    @Override
+    public void onSuccess(Profile type) {
+
+        Intent intent = new Intent();
+        //intent.putExtra("TOKEN", type.getToken());
+        intent.putExtra("PROFILE", type);
+        setResult(RESULT_OK, intent);
+
+        //Toast.makeText(this, type.getName() + " " + type.getToken(), Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    @Override
+    public void onFailed(String message) {
+
     }
 }

@@ -6,27 +6,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewSwitcher;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.auth.AppAuth;
 import ca.com.androidbinnersproject.auth.Authentication;
 import ca.com.androidbinnersproject.auth.FacebookAuth;
 import ca.com.androidbinnersproject.auth.GoogleAuth;
-import ca.com.androidbinnersproject.auth.OnAuthListener;
+import ca.com.androidbinnersproject.listeners.OnAuthListener;
 import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
@@ -34,7 +30,7 @@ import ca.com.androidbinnersproject.util.Logger;
 import ca.com.androidbinnersproject.util.Util;
 
 
-public class LoginActivity extends AppCompatActivity implements OnAuthListener, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity implements OnAuthListener, View.OnClickListener {
     public static String IS_AUTHENTICATED = "IS_AUTHENTICATED";
     public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
     public static String ACCESS_TOKEN = "ACCESS_TOKEN";
@@ -182,7 +178,10 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
 
         if(requestCode == CreateAccountActivity.CREATE_ACCOUNT_RESULT) {
             if(resultCode == RESULT_OK) {
+                //String token = data.getStringExtra("TOKEN");
+                Profile profile = (Profile) data.getSerializableExtra("PROFILE");
 
+                onLoginSuccess(profile);
             }
         }
     }
@@ -238,10 +237,5 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
                 }
             break;
         }
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 }

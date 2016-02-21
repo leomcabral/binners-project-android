@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import ca.com.androidbinnersproject.apis.FacebookLoginService;
+import ca.com.androidbinnersproject.listeners.OnAuthListener;
 import ca.com.androidbinnersproject.models.Profile;
 import retrofit2.Call;
 import retrofit2.Callback;
