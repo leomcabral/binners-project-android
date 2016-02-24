@@ -11,5 +11,5 @@ import retrofit2.http.POST;
  */
 public interface CreateUserService {
     @POST("users")
-    public abstract Call<Profile> create(@Body User user);
+    Call<Profile> create(@Body User user);
 }

@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/create_user_edtPassword"
-        android:background="@drawable/create_user_get_started"
+        android:background="@drawable/get_started_button"
         app:layout_heightPercent="7%"
         app:layout_marginTopPercent="2%" />
 

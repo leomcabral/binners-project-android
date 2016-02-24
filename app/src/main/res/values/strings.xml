@@ -20,4 +20,6 @@
     <string name="create_user_validation_name">Name should not be empty</string>
     <string name="create_user_validation_email">Email should be valid</string>
     <string name="create_user_validation_password">Password need at least 6 characters</string>
+    <string name="forgotPasswordTitle">Forgot your password?</string>
+    <string name="forgotPasswordBody">Enter your email address and we\'ll send you a link to set a new one</string>
 </resources>

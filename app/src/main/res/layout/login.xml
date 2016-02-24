@@ -25,7 +25,7 @@
         android:id="@+id/login_binner_resident_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_binners_logo"
+        android:layout_below="@id/login_binners_logo"
         android:layout_gravity="right"
         android:background="@drawable/binner_resident_selector"
         android:checked="true"
@@ -41,7 +41,7 @@
         android:id="@+id/login_vs_binner_resident"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/login_binner_resident_selector">
+        android:layout_below="@id/login_binner_resident_selector">
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
@@ -139,6 +139,7 @@
                     android:textSize="10sp" />
 
                 <Button
+                    android:id="@+id/login_btnForgotPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

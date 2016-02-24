@@ -22,10 +22,10 @@ import ca.com.androidbinnersproject.auth.AppAuth;
 import ca.com.androidbinnersproject.auth.Authentication;
 import ca.com.androidbinnersproject.auth.FacebookAuth;
 import ca.com.androidbinnersproject.auth.GoogleAuth;
-import ca.com.androidbinnersproject.listeners.OnAuthListener;
-import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.auth.TwitterAuth;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
+import ca.com.androidbinnersproject.listeners.OnAuthListener;
+import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.util.Logger;
 import ca.com.androidbinnersproject.util.Util;
 
@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
     private Button btnTwitter;
     private Button btnLogin;
     private Button btnCreateAccount;
+    private Button btnForgotPassword;
 
     private EditText edtEmail;
     private EditText edtPassword;
@@ -54,7 +55,6 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
     private ToggleButton binnerResidentSelector;
 
     private ProgressDialog mProgressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
 		btnTwitter  = (Button) findViewById(R.id.login_button_twitter);
         btnLogin    = (Button) findViewById(R.id.login_login_button);
         btnCreateAccount = (Button) findViewById(R.id.login_btnCreateAccount);
+        btnForgotPassword = (Button) findViewById(R.id.login_btnForgotPassword);
 
         edtEmail    = (EditText) findViewById(R.id.login_email_field);
         edtPassword = (EditText) findViewById(R.id.login_password_field);
@@ -117,7 +118,15 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
                 startActivityForResult(createUserIntent, CreateAccountActivity.CREATE_ACCOUNT_RESULT);
             }
         });
-    }
+
+        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent forgotPasswordIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+				startActivityForResult(forgotPasswordIntent, 0);
+			}
+		});
+	}
 
     @Override
     public void onLoginSuccess(Profile profile) {
