@@ -152,6 +152,11 @@
 
         </android.support.percent.PercentRelativeLayout >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </RelativeLayout>
+
     </ViewSwitcher>
 
 </android.support.percent.PercentRelativeLayout>
