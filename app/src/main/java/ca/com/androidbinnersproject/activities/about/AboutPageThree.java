@@ -1,4 +1,4 @@
-package ca.com.androidbinnersproject.activities;
+package ca.com.androidbinnersproject.activities.about;
 
 import android.app.Activity;
 import android.content.Context;

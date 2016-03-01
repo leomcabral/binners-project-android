@@ -1,7 +1,8 @@
-package ca.com.androidbinnersproject.activities;
+package ca.com.androidbinnersproject.activities.about;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,8 @@ import ca.com.androidbinnersproject.util.Logger;
 /**
  * Created by jonathan_campos on 07/02/2016.
  */
-public class AboutPageTwo extends Fragment {
+public class AboutPageOne extends Fragment {
+
     private TextView txtSkip;
     private OnSkipListener mListener;
 
@@ -36,7 +38,8 @@ public class AboutPageTwo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.about_page_two,container,false);
+        
+        View view = inflater.inflate(R.layout.about_page_one,container,false);
 
         txtSkip = (TextView) view.findViewById(R.id.imgSkipButton);
 

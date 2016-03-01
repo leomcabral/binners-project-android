@@ -16,46 +16,53 @@ import retrofit2.Retrofit;
  * Created by jonathan_campos on 21/02/2016.
  */
 public class CreateAccount {
-    final String LOG_TAG = getClass().getName();
+	final String LOG_TAG = getClass().getName();
 
-    private ResponseListener<Profile> mResponseListener;
+	private ResponseListener<Profile> mResponseListener;
 
-    public CreateAccount() {
-    }
+	public CreateAccount(ResponseListener<Profile> listener) {
+		mResponseListener = listener;
+	}
 
-    public CreateAccount(ResponseListener<Profile> listener) {
-        mResponseListener = listener;
-    }
+	public void newUser(String name, String email, String password) {
+		User user = new User(name, email, password);
 
-    public void newUser(String name, String email, String password) {
-        User user = new User(name, email, password);
+		sendToServer(user);
+	}
 
-        sendToServer(user);
-    }
+	private void sendToServer(User user) {
 
-    private void sendToServer(User user) {
-        Retrofit retrofit = BaseAPI.getRetroInstance();
+		if(mResponseListener == null) {
+            Log.i(LOG_TAG, "Received null ResponseListener in sendToServer call, maybe harmless");
+		}
 
-        CreateUserService service = retrofit.create(CreateUserService.class);
+		Retrofit retrofit = BaseAPI.getRetroInstance();
 
-        Call<Profile> call = service.create(user);
+		CreateUserService service = retrofit.create(CreateUserService.class);
 
-        call.enqueue(new Callback<Profile>() {
-            @Override
-            public void onResponse(Response<Profile> response) {
-                if(response.code() == 200) {
-                    Log.i(LOG_TAG, "User created!");
-                    mResponseListener.onSuccess(response.body());
-                } else {
-                    Log.i(LOG_TAG, "Error: " + response.errorBody().toString());
-                    mResponseListener.onFailed(response.errorBody().toString());
-                }
-            }
+		Call<Profile> call = service.create(user);
 
-            @Override
-            public void onFailure(Throwable t) {
-                mResponseListener.onFailed("Error, try again.");
-            }
-        });
-    }
+		call.enqueue(new Callback<Profile>() {
+			@Override
+			public void onResponse(Response<Profile> response) {
+				if(response.code() == 200) {
+					Log.i(LOG_TAG, "User created!");
+
+					if(mResponseListener != null)
+						mResponseListener.onSuccess(response.body());
+				} else {
+					Log.i(LOG_TAG, "Error: " + response.errorBody().toString());
+
+					if(mResponseListener != null)
+						mResponseListener.onFailed(response.errorBody().toString());
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable t) {
+				if(mResponseListener != null)
+					mResponseListener.onFailed("Error, try again.");
+			}
+		});
+	}
 }

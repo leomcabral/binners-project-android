@@ -11,11 +11,19 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import ca.com.androidbinnersproject.activities.CreateAccountActivity;
 import ca.com.androidbinnersproject.apis.BaseAPI;
 import ca.com.androidbinnersproject.apis.TwitterLoginService;
 import ca.com.androidbinnersproject.auth.keys.ApiKey;
 import ca.com.androidbinnersproject.auth.keys.KeyManager;
+import ca.com.androidbinnersproject.bll.CreateAccount;
 import ca.com.androidbinnersproject.listeners.OnAuthListener;
+import ca.com.androidbinnersproject.listeners.ResponseListener;
 import ca.com.androidbinnersproject.models.Profile;
 import ca.com.androidbinnersproject.models.User;
 import ca.com.androidbinnersproject.util.Logger;
@@ -47,19 +55,19 @@ public class TwitterAuth extends Authentication {
 			public void success(Result<TwitterSession> result) {
 
 				Logger.Info("Twitter login successful");
-
 				session = result.data;
-				signInBackend();
+				signInBackend(true);
 			}
 
 			@Override
 			public void failure(TwitterException e) {
-				Logger.Info("Twitter login failed");
+				Logger.Info("Twitter login failed: " + e.getMessage());
 			}
 		});
 	}
 
-	private void signInBackend() {
+	private void signInBackend(final boolean firstTime) {
+
 		if(session == null)
 			return;
 
@@ -73,8 +81,41 @@ public class TwitterAuth extends Authentication {
 		call.enqueue(new retrofit2.Callback<Profile>() {
 			@Override
 			public void onResponse(Response<Profile> response) {
-				if(response.isSuccess())
-					Logger.Info("Twitter login successful");
+
+				Logger.Info("Received Twitter.signInBackend response with code: " + response.code());
+
+				if(response.isSuccess()) {
+
+					Logger.Info("Server responded with success status");
+
+				} else {
+
+					if(!firstTime)
+					{
+						Logger.Info("Failed to create account for new Twitter user, quitting to avoid StackOverflow");
+						return;
+					}
+
+					try {
+						JSONObject errorBody = new JSONObject(response.errorBody().string());
+
+						if(errorBody.getJSONObject("details").get("message").toString().equalsIgnoreCase("User not found.")) {
+							Logger.Info("User not found in server, will invoke CreateUser");
+
+							CreateAccount createAccount = new CreateAccount(null);
+							createAccount.newUser(session.getUserName(), "NoEmail", "_NoPassword_");
+
+							signInBackend(false);
+
+							return;
+						}
+
+						Logger.Error("Server responded with error status and could not determine the reason");
+					} catch(IOException | JSONException e) {
+						Logger.Info("Could not get errorBody from server response: " + e.getMessage());
+					}
+
+				}
 			}
 
 			@Override
