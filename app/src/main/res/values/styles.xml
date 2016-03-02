@@ -22,6 +22,8 @@
     </style>
 
     <style name="BinnersNoActionTheme" parent="Theme.AppCompat.NoActionBar">
+
     </style>
+
 
 </resources>

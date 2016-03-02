@@ -71,6 +71,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/BinnersNoActionTheme"/>
 
+        <activity
+            android:name=".activities.pickup.SelectDateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BinnersNoActionTheme"/>
+
     </application>
 
 </manifest>
