@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/txtDayOfWeek"
+        android:id="@+id/select_date_activity_txtDayOfWeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -24,7 +24,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btnPreviousDay"
+            android:id="@+id/select_date_activity_btnPreviousDay"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -33,7 +33,7 @@
             android:src="@drawable/arrow_left" />
 
         <TextView
-            android:id="@+id/txtDayOfMonth"
+            android:id="@+id/select_date_activity_txtDayOfMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,7 +43,7 @@
             tools:text="7" />
 
         <ImageButton
-            android:id="@+id/btnNextDay"
+            android:id="@+id/select_date_activity_btnNextDay"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -61,7 +61,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btnPreviousMonth"
+            android:id="@+id/select_date_activity_btnPreviousMonth"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -70,7 +70,7 @@
             android:src="@drawable/arrow_left" />
 
         <TextView
-            android:id="@+id/txtMonth"
+            android:id="@+id/select_date_activity_txtMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,7 +79,7 @@
             tools:text="February" />
 
         <ImageButton
-            android:id="@+id/btnNextMonth"
+            android:id="@+id/select_date_activity_btnNextMonth"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -90,7 +90,7 @@
     </LinearLayout>
 
     <CalendarView
-        android:id="@+id/custom_calendar_view"
+        android:id="@+id/select_date_activity_calendar_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></CalendarView>
 </LinearLayout>
