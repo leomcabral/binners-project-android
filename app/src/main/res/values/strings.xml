@@ -47,4 +47,16 @@
         <item>Friday</item>
         <item>Saturday</item>
     </string-array>
+
+    <string-array name="nav_drawer_labels">
+        <item>My Profile</item>
+        <item>Donate</item>
+        <item>Help</item>
+        <item>Binners</item>
+        <item>Account</item>
+    </string-array>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
 </resources>
