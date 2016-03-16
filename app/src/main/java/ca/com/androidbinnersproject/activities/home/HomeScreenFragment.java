@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.activities.pickup.PickupListFragment;
@@ -18,6 +19,8 @@ public class HomeScreenFragment extends Fragment {
 
 	private TabLayout tabLayout;
 	private ViewPager viewPager;
+
+	private Button newPickupButton;
 
 	public HomeScreenFragment() {
 	}
@@ -36,6 +39,14 @@ public class HomeScreenFragment extends Fragment {
 
 		tabLayout = (TabLayout) view.findViewById(R.id.home_tablayout);
 		tabLayout.setupWithViewPager(viewPager);
+
+		newPickupButton = (Button) view.findViewById(R.id.home_newpickup_button);
+		newPickupButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
 
 		return view;
 	}
