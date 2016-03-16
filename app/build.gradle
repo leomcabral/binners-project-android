@@ -48,16 +48,16 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-plus:8.4.0'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.scottyab:aes-crypto:0.0.4'
     compile 'com.android.support:percent:23.2.0'
     compile 'com.github.citux:datetimepicker:0.2.0'
-    compile 'com.android.support:recyclerview-v7:23.2.0'
-    compile 'com.android.support:support-v4:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:support-v4:23.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
