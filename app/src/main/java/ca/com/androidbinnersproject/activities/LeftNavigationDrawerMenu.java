@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class LeftNavigationDrawerMenu extends Fragment {
         return layout;
     }
 
-    public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
+    public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar, final String userName) {
         mContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -102,6 +103,9 @@ public class LeftNavigationDrawerMenu extends Fragment {
             }
         });
 
+        TextView txtProfileName = (TextView) getActivity().findViewById(R.id.left_navigation_drawer_menu_profile_name);
+
+        txtProfileName.setText(userName);
     }
 
     public void setDrawerListener(FragmentDrawerListener listener) {

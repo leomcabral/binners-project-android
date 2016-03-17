@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
 	public static String IS_AUTHENTICATED = "IS_AUTHENTICATED";
 	public static String USER_AUTHENTICATED = "USER_AUTHENTICATED";
 	public static String ACCESS_TOKEN = "ACCESS_TOKEN";
+	public static String PROFILE_NAME = "PROFILE_NAME";
+	public static String PROFILE_EMAIL = "PROFILE_EMAIL";
 	public static final int FROM_LOGIN = 25678;
 
 	private KeyManager keyManager;
@@ -134,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
 
 		Toast.makeText(this, "Logged as " + profile.getName() + " | " + profile.getEmail() + " /   " + profile.getToken(), Toast.LENGTH_LONG).show();
 
-		saveAuthenticatedUser(profile.getToken());
+		saveAuthenticatedUser(profile);
 
 		setResult(RESULT_OK);
 
@@ -162,12 +164,14 @@ public class LoginActivity extends AppCompatActivity implements OnAuthListener, 
 			mProgressDialog.dismiss();
 	}
 
-	private void saveAuthenticatedUser(String token) {
+	private void saveAuthenticatedUser(Profile profile) {
 		SharedPreferences preferences = getSharedPreferences(USER_AUTHENTICATED, 0);
 		SharedPreferences.Editor editor = preferences.edit();
 
 		editor.putBoolean(IS_AUTHENTICATED, true);
-		editor.putString(ACCESS_TOKEN, token);
+		editor.putString(ACCESS_TOKEN, profile.getToken());
+		editor.putString(PROFILE_NAME, profile.getName());
+		editor.putString(PROFILE_EMAIL, profile.getEmail());
 		editor.commit();
 	}
 

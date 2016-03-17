@@ -1,6 +1,7 @@
 
 package ca.com.androidbinnersproject.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -32,8 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        final String userLogged = getUserLogged();
+
         mFragmentDrawer = (LeftNavigationDrawerMenu) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        mFragmentDrawer.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        mFragmentDrawer.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar, userLogged);
         mFragmentDrawer.setDrawerListener(this);
 
         containerBody = (FrameLayout) findViewById(R.id.main_container_body);
@@ -60,5 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDrawerItemSelected(View view, int position) {
 
+    }
+
+    private String getUserLogged() {
+        SharedPreferences preferences = getSharedPreferences(LoginActivity.USER_AUTHENTICATED, 0);
+
+        return preferences.getString(LoginActivity.PROFILE_NAME, "USER");
     }
 }
