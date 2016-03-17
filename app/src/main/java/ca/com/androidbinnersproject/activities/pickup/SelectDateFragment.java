@@ -1,7 +1,8 @@
 package ca.com.androidbinnersproject.activities.pickup;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
@@ -16,7 +17,7 @@ import ca.com.androidbinnersproject.R;
 /**
  * Created by jonathan_campos on 02/03/2016.
  */
-public class SelectDateActivity extends AppCompatActivity implements View.OnClickListener {
+public class SelectDateFragment extends Fragment implements View.OnClickListener {
 
     private TextView txtDayOfWeek;
     private TextView txtDayOfMonth;
@@ -34,19 +35,19 @@ public class SelectDateActivity extends AppCompatActivity implements View.OnClic
     private Calendar superCalendar = Calendar.getInstance();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.pickup_calendar);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        txtDayOfWeek = (TextView) findViewById(R.id.select_date_activity_txtDayOfWeek);
-        txtDayOfMonth = (TextView) findViewById(R.id.select_date_activity_txtDayOfMonth);
-        txtMonth = (TextView) findViewById(R.id.select_date_activity_txtMonth);
-        mCalendarView = (CalendarView) findViewById(R.id.select_date_activity_calendar_view);
+        View view = inflater.inflate(R.layout.pickup_calendar, container, false);
 
-        btnPreviousDay = (ImageButton) findViewById(R.id.select_date_activity_btnPreviousDay);
-        btnNextDay = (ImageButton) findViewById(R.id.select_date_activity_btnNextDay);
-        btnPreviousMonth = (ImageButton) findViewById(R.id.select_date_activity_btnPreviousMonth);
-        btnNextMonth = (ImageButton) findViewById(R.id.select_date_activity_btnNextMonth);
+        txtDayOfWeek = (TextView) view.findViewById(R.id.select_date_activity_txtDayOfWeek);
+        txtDayOfMonth = (TextView) view.findViewById(R.id.select_date_activity_txtDayOfMonth);
+        txtMonth = (TextView) view.findViewById(R.id.select_date_activity_txtMonth);
+        mCalendarView = (CalendarView) view.findViewById(R.id.select_date_activity_calendar_view);
+
+        btnPreviousDay = (ImageButton) view.findViewById(R.id.select_date_activity_btnPreviousDay);
+        btnNextDay = (ImageButton) view.findViewById(R.id.select_date_activity_btnNextDay);
+        btnPreviousMonth = (ImageButton) view.findViewById(R.id.select_date_activity_btnPreviousMonth);
+        btnNextMonth = (ImageButton) view.findViewById(R.id.select_date_activity_btnNextMonth);
         daysOfWeek = getResources().getStringArray(R.array.day_of_week);
         months = getResources().getStringArray(R.array.months);
 
@@ -56,10 +57,12 @@ public class SelectDateActivity extends AppCompatActivity implements View.OnClic
         btnNextMonth.setOnClickListener(this);
 
         initializeCalendar();
+
+        return view;
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         updateViews(superCalendar);
     }
@@ -91,7 +94,7 @@ public class SelectDateActivity extends AppCompatActivity implements View.OnClic
 
                 } else {
                     calendarView.setDate(superCalendar.getTime().getTime());
-                    Toast.makeText(SelectDateActivity.this, "Not Allowed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Not Allowed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -143,7 +146,7 @@ public class SelectDateActivity extends AppCompatActivity implements View.OnClic
             mCalendarView.setDate(superCalendar.getTime().getTime());
         } else {
             mCalendarView.setDate(superCalendar.getTime().getTime());
-            Toast.makeText(SelectDateActivity.this, "Not Allowed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Not Allowed", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,10 +1,10 @@
 
 package ca.com.androidbinnersproject.activities.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import ca.com.androidbinnersproject.R;
+import ca.com.androidbinnersproject.activities.pickup.PickupActivity;
 import ca.com.androidbinnersproject.activities.pickup.PickupListFragment;
 import ca.com.androidbinnersproject.adapters.ViewPagerAdapter;
 
@@ -44,7 +45,8 @@ public class HomeScreenFragment extends Fragment {
 		newPickupButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				Intent intent = new Intent(getActivity(), PickupActivity.class);
+				startActivity(intent);
 			}
 		});
 
