@@ -4,9 +4,10 @@
     <color name="colorPrimaryDark">#053700</color>
     <color name="colorAccent">#FF4081</color>
     <color name="backgroundApp">#369a3f</color>
-    <color name="tabBackground">#d4fade</color>
+    <color name="tabBackground">#FFFFFF</color>
     <color name="lightBackground">#eaffef</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
+    <color name="whiteBackground">#FFFFFF</color>
 </resources>

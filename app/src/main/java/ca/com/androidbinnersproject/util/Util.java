@@ -1,9 +1,14 @@
 
 package ca.com.androidbinnersproject.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.AppCompatActivity;
+
+import ca.com.androidbinnersproject.activities.LoginActivity;
 
 public class Util
 {
@@ -32,5 +37,16 @@ public class Util
 		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
 		java.util.regex.Matcher m = p.matcher(email);
 		return m.matches();
+	}
+
+	public static String getUserLogged(Activity activity) {
+		SharedPreferences preferences = activity.getSharedPreferences(LoginActivity.USER_AUTHENTICATED, 0);
+
+		String profile = preferences.getString(LoginActivity.PROFILE_NAME, "");
+
+		if(profile != null && profile.length() > 0)
+			return profile;
+
+		return preferences.getString(LoginActivity.PROFILE_EMAIL, "<>");
 	}
 }

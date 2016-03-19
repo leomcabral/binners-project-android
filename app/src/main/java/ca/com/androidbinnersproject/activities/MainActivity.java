@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 
 import ca.com.androidbinnersproject.R;
 import ca.com.androidbinnersproject.activities.home.HomeScreenFragment;
+import ca.com.androidbinnersproject.util.Util;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, LeftNavigationDrawerMenu.FragmentDrawerListener {
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        final String userLogged = getUserLogged();
+        final String userLogged = Util.getUserLogged(this);
 
         mFragmentDrawer = (LeftNavigationDrawerMenu) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         mFragmentDrawer.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar, userLogged);
@@ -63,11 +64,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDrawerItemSelected(View view, int position) {
 
-    }
-
-    private String getUserLogged() {
-        SharedPreferences preferences = getSharedPreferences(LoginActivity.USER_AUTHENTICATED, 0);
-
-        return preferences.getString(LoginActivity.PROFILE_NAME, "USER");
     }
 }
