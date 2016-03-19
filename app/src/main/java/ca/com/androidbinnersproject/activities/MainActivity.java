@@ -1,15 +1,18 @@
 
 package ca.com.androidbinnersproject.activities;
 
+<<<<<<< HEAD
 
 import android.content.SharedPreferences;
 import android.content.Context;
+=======
+import android.content.SharedPreferences;
+>>>>>>> 44c99c25248d01df9c198d39c14133206296f840
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -61,12 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        /*switch (v.getId()) {
-            case R.id.activity_main_btnSelectTime: {
-                Intent intent = new Intent(MainActivity.this, PickupActivity.class);
-                startActivity(intent);
-            } break;
-        }*/
     }
 
     @Override

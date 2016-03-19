@@ -2,15 +2,17 @@
 package ca.com.androidbinnersproject.activities.pickup;
 
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.datetimepicker.HapticFeedbackController;
 import com.android.datetimepicker.Utils;
 import com.android.datetimepicker.time.RadialPickerLayout;
+import com.android.datetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -36,6 +38,8 @@ public class TimePickerFragment extends Fragment implements RadialPickerLayout.O
 	private TextView minutesView;
 	private TextView ampmHitspace;
 	private TextView ampmLabel;
+
+	private HapticFeedbackController hapticFeedbackController;
 
 	private int selectedColor;
 	private int unselectedColor;
@@ -66,14 +70,19 @@ public class TimePickerFragment extends Fragment implements RadialPickerLayout.O
 
 		View view = inflater.inflate(R.layout.pickup_timepicker, container, false);
 
+		selectedColor = R.color.blue_focused;
+		unselectedColor = R.color.light_gray;
+
 		radialPickerLayout = (RadialPickerLayout) view.findViewById(R.id.pickup_time_picker);
 		hoursView = (TextView) view.findViewById(R.id.pickup_timepicker_hours);
 		minutesView = (TextView) view.findViewById(R.id.pickup_timepicker_minutes);
 		ampmHitspace = (TextView) view.findViewById(R.id.pickup_timepicker_ampm_hitspace);
 		ampmLabel = (TextView) view.findViewById(R.id.pickup_timepicker_ampm_label);
 
+		hapticFeedbackController = new HapticFeedbackController(getActivity());
+
 		radialPickerLayout.setOnValueSelectedListener(this);
-		radialPickerLayout.initialize(getActivity(), null, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, 0, 12, 0, 59);
+		radialPickerLayout.initialize(getActivity(), hapticFeedbackController, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, 0, 12, 0, 59);
 
 		setCurrentItemShowing(HOUR_INDEX, true, true);
 

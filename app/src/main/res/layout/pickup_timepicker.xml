@@ -26,37 +26,4 @@
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="@color/line_background" />
-
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/timepicker_back_button"
-            android:background="@drawable/done_background_color"
-            android:layout_width="wrap_content"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="Back"
-            android:textSize="@dimen/done_label_size"
-            android:textColor="@color/done_text_color" />
-
-        <Button
-            android:id="@+id/timepicker_next_button"
-            android:background="@drawable/done_background_color"
-            android:layout_width="wrap_content"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/timepicker_back_button"
-            android:minHeight="48dp"
-            android:text="Next"
-            android:textSize="@dimen/done_label_size"
-            android:textColor="@color/done_text_color" />
-    </android.support.percent.PercentRelativeLayout>
-
 </LinearLayout>
