@@ -1,12 +1,18 @@
 package ca.com.androidbinnersproject.activities.pickup;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,10 +110,21 @@ public class SelectDateFragment extends Fragment implements View.OnClickListener
         int day          = calendar.get(Calendar.DAY_OF_MONTH);
         String dayOfWeek = daysOfWeek[calendar.get(Calendar.DAY_OF_WEEK) - 1];
         String month     = months[calendar.get(Calendar.MONTH)];
+        int year         = calendar.get(Calendar.YEAR);
 
         txtDayOfWeek.setText(dayOfWeek);
         txtDayOfMonth.setText(String.valueOf(day));
-        txtMonth.setText(month);
+        txtMonth.setText(getFormattedMonth(month, year));
+    }
+
+    public SpannableString getFormattedMonth(String month, int year) {
+        final String fullText = month + " " + year;
+
+        SpannableString text = new SpannableString(fullText);
+
+        text.setSpan(new ForegroundColorSpan(Color.LTGRAY), month.length(), fullText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return text;
     }
 
     public void setMinDate() {

@@ -69,7 +69,7 @@
         <activity
             android:name=".activities.pickup.PickupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BinnersNoActionTheme"/>
+            android:theme="@style/PickupNoActionTheme"/>
 
     </application>
 
