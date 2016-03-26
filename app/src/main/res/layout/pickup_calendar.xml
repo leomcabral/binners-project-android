@@ -10,13 +10,22 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pickup_calendar_info"
+        android:textColor="@color/mediumGray"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"/>
+
+    <TextView
         android:id="@+id/select_date_activity_txtDayOfWeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textColor="#369a3f"
         android:textSize="20sp"
-        tools:text="Tuesday" />
+        tools:text="Tuesday"
+        android:layout_marginTop="40dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,7 +85,8 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textSize="20sp"
-            tools:text="February" />
+            tools:text="February 2016"
+            android:textColor="@color/mediumGray"/>
 
         <ImageButton
             android:id="@+id/select_date_activity_btnNextMonth"

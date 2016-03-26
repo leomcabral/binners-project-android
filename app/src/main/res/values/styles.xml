@@ -25,5 +25,15 @@
 
     </style>
 
+    <style name="PickupNoActionTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:calendarViewStyle">@style/Widget.CalendarView.Custom</item>
+        <item name="android:background">@color/pickupBgColor</item>
+    </style>
+
+    <style name="Widget.CalendarView.Custom" parent="android:Widget.Holo.CalendarView">
+        <item name="android:focusedMonthDateColor">@color/mediumGray</item>
+        <item name="android:unfocusedMonthDateColor">@color/mediumGray</item>
+        <item name="android:selectedDateVerticalBar">@color/backgroundApp</item>
+    </style>
 
 </resources>
