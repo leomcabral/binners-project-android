@@ -13,14 +13,13 @@ import ca.com.androidbinnersproject.R;
 
 public class PickupActivity extends AppCompatActivity {
 
-	public enum PickupStage {
-		Date,
-		Time,
-		Location,
-		Confirm
-	}
+	public static final int	Stage_Date = 0;
+	public static final int	Stage_Time = 1;
+	public static final int	Stage_Location = 2;
+	public static final int	Stage_Confirm = 3;
+	public static final int Stage_Last = 3;
 
-	private PickupStage currentStage;
+	private int currentStage;
 
 	private Button nextButton;
 	private Button backButton;
@@ -31,23 +30,29 @@ public class PickupActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pickup);
 
-		setFragmentStage(PickupStage.Date);
+		setFragmentStage(Stage_Date);
 
 		nextButton = (Button) findViewById(R.id.pickup_next_button);
 		backButton = (Button) findViewById(R.id.pickup_back_button);
 		container = (FrameLayout) findViewById(R.id.pickup_container);
 
-		//TODO find elegant way to switch stages (convert enum to int?)
 		View.OnClickListener buttonListener = new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				if(v.getId() == R.id.pickup_next_button) {
 
-					setFragmentStage(PickupStage.Time);
+					if(currentStage > Stage_Last)
+						finishedPickUp();
+					else
+						setFragmentStage(currentStage + 1);
 
 				} else {
 
-					setFragmentStage(PickupStage.Date);
+					if(currentStage > 0)
+						abortPickUp();
+					else
+						setFragmentStage(currentStage - 1);
 
 				}
 			}
@@ -57,7 +62,7 @@ public class PickupActivity extends AppCompatActivity {
 		backButton.setOnClickListener(buttonListener);
 	}
 
-	private void setFragmentStage(PickupStage stage) {
+	private void setFragmentStage(int stage) {
 
 		if(currentStage == stage)
 			return;
@@ -71,21 +76,27 @@ public class PickupActivity extends AppCompatActivity {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 
 		switch(currentStage) {
-			case Date:
+			case Stage_Date:
 				transaction.add(R.id.pickup_container, new SelectDateFragment());
 			break;
 
-			case Time:
+			case Stage_Time:
 				transaction.add(R.id.pickup_container, new TimePickerFragment());
 			break;
 
-			case Location:
+			case Stage_Location:
 			break;
 
-			case Confirm:
+			case Stage_Confirm:
 			break;
 		}
 
 		transaction.commit();
+	}
+
+	private void finishedPickUp() {
+	}
+
+	private void abortPickUp() {
 	}
 }
