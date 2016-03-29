@@ -30,6 +30,7 @@ public class PickupActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pickup);
 
+		currentStage = -1;
 		setFragmentStage(Stage_Date);
 
 		nextButton = (Button) findViewById(R.id.pickup_next_button);
@@ -40,21 +41,21 @@ public class PickupActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 
-				if(v.getId() == R.id.pickup_next_button) {
+			if(v.getId() == R.id.pickup_next_button) {
 
-					if(currentStage > Stage_Last)
-						finishedPickUp();
-					else
-						setFragmentStage(currentStage + 1);
+				if(currentStage > Stage_Last)
+					finishedPickUp();
+				else
+					setFragmentStage(currentStage + 1);
 
-				} else {
+			} else {
 
-					if(currentStage > 0)
-						abortPickUp();
-					else
-						setFragmentStage(currentStage - 1);
+				if(currentStage <= 0)
+					abortPickUp();
+				else
+					setFragmentStage(currentStage - 1);
 
-				}
+			}
 			}
 		};
 
@@ -75,6 +76,7 @@ public class PickupActivity extends AppCompatActivity {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+		//TODO cache fragment state to avoid state loss between stage switches
 		switch(currentStage) {
 			case Stage_Date:
 				transaction.add(R.id.pickup_container, new SelectDateFragment());

@@ -49,8 +49,8 @@ public class HomeScreenFragment extends Fragment {
 		adapter.AddFragment(new PickupListFragment(), "Upcoming Pick-Ups");
 		adapter.AddFragment(new PickupListFragment(), "Completed Pick-Ups");
 
-        txtProfile= (TextView) view.findViewById(R.id.home_screen_txtProfile);
-        imgProfile= (ImageView) view.findViewById(R.id.home_screen_imgProfile);
+        txtProfile = (TextView) view.findViewById(R.id.home_screen_txtProfile);
+        imgProfile = (ImageView) view.findViewById(R.id.home_screen_imgProfile);
 		viewPager = (ViewPager) view.findViewById(R.id.home_viewpager);
 		viewPager.setAdapter(adapter);
 

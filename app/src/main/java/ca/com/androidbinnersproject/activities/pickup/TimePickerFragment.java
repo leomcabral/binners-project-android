@@ -2,6 +2,7 @@
 package ca.com.androidbinnersproject.activities.pickup;
 
 import android.animation.ObjectAnimator;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -70,8 +71,8 @@ public class TimePickerFragment extends Fragment implements RadialPickerLayout.O
 
 		View view = inflater.inflate(R.layout.pickup_timepicker, container, false);
 
-		selectedColor = R.color.blue_focused;
-		unselectedColor = R.color.light_gray;
+		selectedColor = Color.parseColor("#006de8");
+		unselectedColor = Color.parseColor("#7fb6f3");
 
 		radialPickerLayout = (RadialPickerLayout) view.findViewById(R.id.pickup_time_picker);
 		hoursView = (TextView) view.findViewById(R.id.pickup_timepicker_hours);
@@ -208,7 +209,7 @@ public class TimePickerFragment extends Fragment implements RadialPickerLayout.O
 	}
 
 	private boolean valueRespectsHoursConstraint(int value) {
-		return (0 <= value && 12 >= value);
+		return (value >= 0 && value <= 12);
 	}
 
 	private boolean valueRespectsMinutesConstraint(int value) {

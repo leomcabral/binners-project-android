@@ -3,13 +3,32 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/circle_background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TIME"
+        android:gravity="center"
+        android:background="@color/circle_background"
+        android:textColor="@android:color/black"
+        android:textSize="40sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="@string/pickup_time_instructions"
+        android:background="@color/circle_background"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:gravity="center"/>
 
     <FrameLayout
         android:id="@+id/timepicker_time_display_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white" >
+        android:background="@color/circle_background" >
         <include
             layout="@layout/pickup_time_label"
             android:layout_width="match_parent"
@@ -20,7 +39,7 @@
     <com.android.datetimepicker.time.RadialPickerLayout
         android:id="@+id/pickup_time_picker"
         android:layout_height="wrap_content"
-        android:layout_width="@dimen/picker_dimen"
+        android:layout_width="@dimen/timepicker_dimen"
         android:layout_gravity="center"
         android:background="@color/circle_background"
         android:focusable="true"

@@ -59,11 +59,10 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="pickup_calendar_info">Please provide your preferred date for a pick-up.</string>
     <string name="pickup_additional_notes_infoOne">Please provide any further instructions for the binner.</string>
     <string name="pickup_additional_notes_infoTwo">"Let's make it easy for your local binner to find \nyour bottles and cans! Leave them any \nnotes about where to get the pick-up."</string>
     <string name="pickup_additional_notes_hint">"E.g. Hey! I've left  my bottles and cans for you by \nthe recycling bin in the alleyway."</string>
+
+    <string name="pickup_time_instructions">Please provide your preferred pickup time\nA binner will arrive at the time you specify</string>
 </resources>
