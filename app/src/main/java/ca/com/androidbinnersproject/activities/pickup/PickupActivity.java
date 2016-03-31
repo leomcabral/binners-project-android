@@ -92,6 +92,7 @@ public class PickupActivity extends AppCompatActivity {
 			break;
 
 			case Stage_Bottles:
+				transaction.add(R.id.pickup_container, new PickupBottlesFragment());
 			break;
 
 			case Stage_Instructions:

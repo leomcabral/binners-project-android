@@ -69,4 +69,9 @@
     <string name="pickup_instructions_main">Let\'s make it easy for your local binner to\nfind your bottles and cans! Leave them any\nnotes about where to get the pick-up</string>
     <string name="pickup_instructions_hint">E.g. Hey! I\'ve left my bottles and cans for you by the recycling bin in the alleyway</string>
 
+    <string name="pickup_bottles_top">Give us a rough estimate of how many\nredeemables you have for pick-up</string>
+    <string name="pickup_bottles_advice">No less than 15 bottles please</string>
+    <string name="pickup_bottles_numberofbottles">Number of bottles</string>
+    <string name="pickup_bottles_takepicture">Take a picture</string>
+
 </resources>

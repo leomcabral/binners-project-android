@@ -1,0 +1,108 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="ca.com.androidbinnersproject.activities.pickup.PickupBottlesFragment"
+             android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="BOTTLES"
+        android:textSize="35sp"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="@string/pickup_bottles_top"
+        android:textSize="18sp"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="@string/pickup_bottles_advice"
+        android:textSize="15sp"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"/>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="left"
+            android:text="@string/pickup_bottles_numberofbottles"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/pickup_bottles_numBottlesField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/pickup_bottles_orSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/pickup_bottles_numBottlesField"
+            android:layout_marginTop="30dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/black"
+                android:layout_weight="3"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="or"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/black"
+                android:layout_weight="3"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/pickup_bottles_takePicture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pickup_bottles_takepicture"
+            android:layout_below="@id/pickup_bottles_orSeparator"
+            android:layout_marginTop="20dp"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+</LinearLayout>

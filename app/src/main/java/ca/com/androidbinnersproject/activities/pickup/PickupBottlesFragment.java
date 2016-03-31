@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 
 import ca.com.androidbinnersproject.R;
 
-public class PickupInstructionsFragment extends Fragment {
+public class PickupBottlesFragment extends Fragment {
 
-	public PickupInstructionsFragment() {
+	public PickupBottlesFragment() {
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_pickup_instructions, container, false);
+		return inflater.inflate(R.layout.fragment_pickup_bottles, container, false);
 	}
 }
