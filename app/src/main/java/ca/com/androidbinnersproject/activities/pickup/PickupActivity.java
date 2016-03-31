@@ -16,8 +16,10 @@ public class PickupActivity extends AppCompatActivity {
 	public static final int	Stage_Date = 0;
 	public static final int	Stage_Time = 1;
 	public static final int	Stage_Location = 2;
-	public static final int	Stage_Confirm = 3;
-	public static final int Stage_Last = 3;
+	public static final int	Stage_Bottles = 3;
+	public static final int	Stage_Instructions = 4;
+	public static final int	Stage_Confirm = 5;
+	public static final int Stage_Last = 5; //value of last stage
 
 	private int currentStage;
 
@@ -87,6 +89,13 @@ public class PickupActivity extends AppCompatActivity {
 			break;
 
 			case Stage_Location:
+			break;
+
+			case Stage_Bottles:
+			break;
+
+			case Stage_Instructions:
+				transaction.add(R.id.pickup_container, new PickupInstructionsFragment());
 			break;
 
 			case Stage_Confirm:
