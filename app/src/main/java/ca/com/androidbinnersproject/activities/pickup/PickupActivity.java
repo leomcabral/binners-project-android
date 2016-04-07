@@ -1,6 +1,7 @@
 package ca.com.androidbinnersproject.activities.pickup;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import ca.com.androidbinnersproject.R;
+import ca.com.androidbinnersproject.util.Logger;
 
 public class PickupActivity extends AppCompatActivity {
 
@@ -110,5 +113,21 @@ public class PickupActivity extends AppCompatActivity {
 	}
 
 	private void abortPickUp() {
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if(requestCode == PickupBottlesFragment.PictureRequestCode) {
+
+			if(resultCode != RESULT_OK) {
+				Logger.Error("Failed to retrieve Picture from Camera activity or user canceled, result=" + resultCode);
+				return;
+			}
+
+			Toast.makeText(this, "Picture saved in\n" + data.getData(), Toast.LENGTH_LONG).show();
+		}
+
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }
